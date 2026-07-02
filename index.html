@@ -986,3 +986,172 @@ function startLoop({ renderer, scene, camera, controls, getMixer }) {
   loop();
   return () => cancelAnimationFrame(id);
 }
+
+// ─── Scroll-jacked scenes ─────────────────────────────────────────────────
+// Each .ex-scroll-space has height=300vh.
+// The sticky child fills 100vh. GSAP ScrollTrigger scrubs mixer time.
+
+const gsap = window.gsap;
+const ScrollTrigger = window.ScrollTrigger;
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero entrance
+gsap.from('#hero-tag',   { opacity:0, y:16, duration:.6, delay:.2 });
+gsap.from('#hero-title', { opacity:0, y:24, duration:.7, delay:.35 });
+gsap.from('#hero-sub',   { opacity:0, y:16, duration:.6, delay:.5 });
+gsap.from('#hero-cta',   { opacity:0, y:12, duration:.5, delay:.65 });
+gsap.from('#hero-stats', { opacity:0, y:10, duration:.5, delay:.8 });
+
+// Phase headers
+gsap.utils.toArray('.phase-header').forEach(el => {
+  gsap.from(el.children, { opacity:0, y:24, duration:.7, stagger:.1, ease:'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 80%', toggleActions: 'play none none none' } });
+});
+
+// Per each exercise scroll-space
+const sceneRegistry = {};  // id → { stop, mixer, clipDuration }
+
+document.querySelectorAll('.ex-scroll-space').forEach(wrapper => {
+  const exId      = wrapper.dataset.exid;
+  const modelPath = wrapper.dataset.model;
+  const sticky    = wrapper.querySelector('.ex-sticky');
+  const canvas    = wrapper.querySelector('canvas');
+  const spinner   = wrapper.querySelector('.ex-spinner');
+  const progFill  = wrapper.querySelector('.ex-progress-fill');
+  const exInfo    = wrapper.querySelector('.ex-info');
+
+  // Slide-in the info panel
+  gsap.from(exInfo, { x: -40, opacity: 0, duration: .8, ease: 'power2.out',
+    scrollTrigger: { trigger: wrapper, start: 'top 75%', toggleActions: 'play none none none' } });
+
+  // Lazy-load scene when wrapper enters viewport
+  let loaded = false;
+  const io = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting || loaded) return;
+    loaded = true;
+    io.disconnect();
+
+    const { renderer, scene, camera, controls } = buildScene(canvas);
+    let mixer = null;
+    let clipDur = 2;
+
+    loadModel(modelPath, scene).then(obj => {
+      spinner.style.display = 'none';
+      canvas.style.opacity = '1';
+
+      if (obj.animations?.length) {
+        mixer = new THREE.AnimationMixer(obj);
+        clipDur = obj.animations[0].duration;
+        const action = mixer.clipAction(obj.animations[0]);
+        action.play();
+        mixer.setTime(0); // start at frame 0, scroll will drive it
+      }
+
+      sceneRegistry[exId] = { stop: null, mixer, clipDur };
+
+      // ── THE KEY: ScrollTrigger scrubs animation time ──────────────────
+      // start: when sticky top hits viewport top (section locked)
+      // end:   when sticky bottom hits viewport bottom (section unlocks)
+      // scrub: true = directly tied to scroll position
+      ScrollTrigger.create({
+        trigger: wrapper,
+        start: 'top top',       // pin moment
+        end: 'bottom bottom',   // unpin moment
+        scrub: 0.6,             // slight smoothing like Apple
+        onUpdate(self) {
+          const s = sceneRegistry[exId];
+          if (!s?.mixer) return;
+          s.mixer.setTime(self.progress * s.clipDur);
+          progFill.style.width = `${self.progress * 100}%`;
+        },
+      });
+
+      sceneRegistry[exId].stop = startLoop({
+        renderer, scene, camera, controls,
+        getMixer: () => sceneRegistry[exId]?.mixer ?? null,
+      });
+
+    }).catch(err => {
+      spinner.style.display = 'none';
+      console.warn('[FBX] failed:', modelPath, err);
+    });
+
+  }, { threshold: 0.01, rootMargin: '200px 0px' });
+
+  io.observe(wrapper);
+});
+
+// ─── Modal ────────────────────────────────────────────────────────────────
+const backdrop    = document.getElementById('modal-backdrop');
+const modalCanvas = document.getElementById('modal-canvas');
+const modalSpinner= document.getElementById('modal-spinner');
+let modalStop = null;
+let modalMixer= null;
+
+function buildModalData(id) {
+  return EXERCISES.find(e => e.id === id);
+}
+
+async function openModal(exId) {
+  const data = buildModalData(exId);
+  if (!data) return;
+
+  document.getElementById('modal-reps').textContent  = data.tag;
+  document.getElementById('modal-title').textContent = data.title;
+  document.getElementById('modal-desc').textContent  = data.desc;
+  document.getElementById('modal-tips').innerHTML    = data.tips.map(t => `<li>${t}</li>`).join('');
+
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  gsap.from('#modal-box', { scale: .9, opacity: 0, duration: .35, ease: 'back.out(1.5)' });
+
+  // Reset
+  if (modalStop) { modalStop(); modalStop = null; }
+  modalCanvas.style.opacity = '0';
+  modalSpinner.style.display = 'block';
+
+  const { renderer, scene, camera, controls } = buildScene(modalCanvas, { autoOrbit: true });
+
+  try {
+    const obj = await loadModel(data.model, scene);
+    modalSpinner.style.display = 'none';
+    modalCanvas.style.opacity = '1';
+
+    if (obj.animations?.length) {
+      const m = new THREE.AnimationMixer(obj);
+      m.clipAction(obj.animations[0]).play();
+      modalMixer = m;
+    }
+  } catch(e) {
+    modalSpinner.style.display = 'none';
+    console.warn('[Modal FBX] error', e);
+  }
+
+  modalStop = startLoop({ renderer, scene, camera, controls, getMixer: () => modalMixer });
+}
+
+function closeModal() {
+  gsap.to('#modal-box', { scale: .93, opacity: 0, duration: .25, ease: 'power2.in', onComplete() {
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+    if (modalStop) { modalStop(); modalStop = null; }
+    modalMixer = null;
+    modalCanvas.style.opacity = '0';
+    modalSpinner.style.display = 'block';
+  }});
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Wire all "Vedi animazione" buttons (delegated, works after DOM injection)
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.ex-btn[data-modal]');
+  if (btn) openModal(btn.dataset.modal);
+});
+
+</script>
+</body>
+</html>
