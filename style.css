@@ -295,6 +295,25 @@ body {
 }
 .btn-anim:hover { background: #bef264; }
 
+/* YouTube link button */
+.btn-yt {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  margin-top: 1.25rem;
+  padding: .65rem 1.4rem;
+  background: #ff0000;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 9999px;
+  text-decoration: none;
+  font-size: .78rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  transition: background .2s, transform .15s;
+}
+.btn-yt:hover { background: #cc0000; transform: scale(1.03); }
+
 /* Progress bar — desktop only */
 .scene-progress {
   position: absolute;
