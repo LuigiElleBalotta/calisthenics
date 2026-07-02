@@ -1,16 +1,28 @@
-# 🏋️ Calisthenics per Principianti
+# 🏋️ Allenamento a Corpo Libero — Calisthenics & Military
 
-Sito web interattivo con **animazioni 3D** per imparare gli esercizi di calisthenics a corpo libero. Nessun attrezzo richiesto.
+Sito web interattivo con **animazioni 3D scroll-driven** per due programmi di allenamento a corpo libero, senza attrezzi.
 
 🔗 **Live demo:** [luigiellebalotta.github.io/calisthenics](https://luigiellebalotta.github.io/calisthenics/)
 
 ---
 
-## 📋 La scheda
+## 🎯 Scegli il tuo programma
 
-La scheda completa è disponibile nel file [`scheda_calisthenics.pdf`](./scheda_calisthenics.pdf).
+La pagina principale mostra uno split-screen: scegli il programma e inizia.
 
-**Struttura:** 3 giri del circuito · 60-90 sec di riposo · 2-3 sessioni a settimana
+| | Calisthenics | Military Workout |
+|---|---|---|
+| **Livello** | Principianti | Intermedio |
+| **Struttura** | 3 giri del circuito | AMRAP 12 minuti |
+| **Riposo** | 60-90 sec | 15-20 sec |
+| **Tema** | 🟢 Verde | 🔴 Rosso |
+| **Scheda PDF** | [calisthenics.pdf](./scheda_calisthenics.pdf) | [military.pdf](./scheda_military.pdf) |
+
+---
+
+## 📋 Scheda Calisthenics
+
+6 esercizi a corpo libero, 3 giri, 2-3 sessioni a settimana.
 
 | # | Esercizio | Ripetizioni |
 |---|-----------|-------------|
@@ -21,35 +33,51 @@ La scheda completa è disponibile nel file [`scheda_calisthenics.pdf`](./scheda_
 | 5 | Superman | 10 rip. |
 | 6 | Glute Bridge | 12-15 rip. |
 
+## 📋 Scheda Military Workout
+
+Circuito AMRAP 12 minuti. Conta quanti giri completi riesci a fare.
+
+| # | Esercizio | Ripetizioni |
+|---|-----------|-------------|
+| 1 | Burpee | 8-10 rip. |
+| 2 | Push-up completo | 12-15 rip. |
+| 3 | Mountain Climber | 20 totali |
+| 4 | Squat Jump | 12-15 rip. |
+| 5 | Plank Shoulder Tap | 20 totali |
+| 6 | High Knees | 30 sec |
+
 ---
 
 ## ✨ Funzionalità
 
 **Desktop**
-- Animazioni 3D **scroll-driven** (Apple-style) — il modello si muove frame-per-frame mentre scorri
-- Canvas `sticky` fullscreen, testo in overlay sul lato destro, modello visibile a sinistra
-- Barra di progresso verde che mostra quanta animazione hai visto
+- Animazioni 3D **scroll-driven** (Apple-style) — il modello avanza frame-per-frame mentre scorri
+- Canvas `sticky` fullscreen, testo in overlay a destra, modello visibile a sinistra
+- Barra di progresso che mostra quanta animazione hai visto
+- Superman e Glute Bridge mostrano un video YouTube reale
 
 **Mobile**
-- Animazione in **loop automatico** — nessuno scroll-jacking (non affidabile su Safari iOS)
+- Animazione in **loop automatico** — no scroll-jacking (non affidabile su Safari iOS)
 - Layout verticale: canvas + testo sotto
-- Bottone "Vedi animazione" per aprire il tutorial completo
+- Bottone "Vedi animazione" per il tutorial in modale
 
 **Comune**
-- Modale con OrbitControls e autoRotate per ogni esercizio
+- Modale 3D con OrbitControls e autoRotate per ogni esercizio
 - SEO: meta tag, Open Graph, Twitter Card, Schema.org
-- Lazy-load dei modelli FBX (caricati solo quando entrano nel viewport)
+- Lazy-load dei modelli FBX
+- Cache-busting automatico via GitHub Actions (commit SHA nei link CSS/JS)
 
 ---
 
 ## 🛠 Stack tecnico
 
-| Libreria | Versione | Uso |
-|----------|----------|-----|
-| [Three.js](https://threejs.org/) | r169 | Rendering 3D, FBXLoader, AnimationMixer |
-| [GSAP](https://gsap.com/) | 3.12 | Animazioni UI + ScrollTrigger scrub |
+| | |
+|---|---|
+| [Three.js](https://threejs.org/) r169 | Rendering 3D, FBXLoader, AnimationMixer |
+| [GSAP](https://gsap.com/) 3.12 | Animazioni UI + ScrollTrigger scrub |
+| CSS vanilla | Temi colore, layout responsive |
 
-CSS vanilla, zero framework, zero build step.
+Zero framework, zero build step.
 
 ---
 
@@ -64,37 +92,38 @@ cd calisthenics
 npx serve .   # → localhost:3000
 ```
 
-> ⚠️ Serve un server HTTP — `file://` non funziona perché i moduli ES e i file FBX richiedono HTTP.
+> ⚠️ Serve un server HTTP — `file://` non funziona.
 
 ---
 
 ## 📁 Struttura del progetto
 
 ```
-calisthenics/
-├── index.html              # Markup HTML
-├── style.css               # Tutti gli stili
-├── app.js                  # ES module — Three.js + GSAP
-├── models/                 # Modelli FBX da Mixamo
-│   ├── Air Squat.fbx
-│   ├── Push Up.fbx
-│   ├── Plank.fbx
-│   ├── Crouching.fbx
-│   ├── Situps.fbx
-│   ├── Burpee.fbx
-│   ├── Arm Stretching.fbx
-│   ├── Twist Dance.fbx
-│   ├── Neck Stretching.fbx
-│   ├── Praying.fbx
-│   └── Jumping Jacks.fbx
-├── scheda_calisthenics.pdf # Scheda originale
-├── CLAUDE.md               # Regole per chi sviluppa
-└── README.md
+index.html                          # Split-screen selezione programma
+calisthenics.html                   # Scheda Calisthenics (tema verde)
+military.html                       # Scheda Military Workout (tema rosso)
+style.css                           # Stili condivisi
+military.css                        # Override tema rosso
+app.js                              # ES module — Calisthenics
+military.js                         # ES module — Military
+models/
+├── Air Squat.fbx
+├── Push Up.fbx
+├── Plank.fbx
+├── Crouching.fbx
+├── Burpee.fbx
+├── Crawling.fbx
+├── Jumping Down.fbx
+├── Catwalk Walk Forward HighKnees.fbx
+└── ... (altri modelli riscaldamento/defaticamento)
+scheda_calisthenics.pdf
+scheda_military.pdf
+.github/workflows/deploy.yml        # GitHub Actions → GitHub Pages
 ```
 
 ---
 
 ## 📄 Licenza
 
-Progetto personale a scopo educativo.  
+Progetto personale a scopo educativo.
 Animazioni 3D: [Mixamo](https://www.mixamo.com/) (Adobe) — uso gratuito non commerciale.
