@@ -183,15 +183,18 @@ function initScrollScenes() {
     const hintEl    = wrapper.querySelector('.scene-hint');
     const infoEl    = wrapper.querySelector('.scene-info');
 
-    let loaded = false;
-    let mixerRef  = null;
-    let clipDur   = 2;
+    const mobile = window.innerWidth < 768;
 
+    let loaded   = false;
+    let mixerRef = null;
+    let clipDur  = 2;
+
+    // Slide-in del testo
     gsap.fromTo(
       infoEl.querySelectorAll('.scene-tag, .scene-title, .scene-desc, .scene-tips, .btn-anim'),
-      { opacity: 0, x: -30 },
-      { opacity: 1, x: 0, duration: 0.65, stagger: 0.07, ease: 'power2.out',
-        scrollTrigger: { trigger: wrapper, start: 'top 72%', toggleActions: 'play none none none' } }
+      { opacity: 0, x: mobile ? 0 : -30, y: mobile ? 16 : 0 },
+      { opacity: 1, x: 0, y: 0, duration: 0.65, stagger: 0.07, ease: 'power2.out',
+        scrollTrigger: { trigger: wrapper, start: 'top 75%', toggleActions: 'play none none none' } }
     );
 
     const io = new IntersectionObserver(([entry]) => {
@@ -201,7 +204,6 @@ function initScrollScenes() {
 
       const { renderer, scene, camera } = buildScene(canvas);
       const ro   = watchResize(canvas, camera, renderer);
-      const stop = startLoop(renderer, scene, camera, () => null);
 
       loadFBX(modelPath, scene).then((obj) => {
         spinEl.style.display = 'none';
@@ -216,24 +218,29 @@ function initScrollScenes() {
           mixerRef.setTime(0);
         }
 
-        const isMobile = window.innerWidth < 768;
+        if (mobile) {
+          // ── MOBILE: animazione in loop autonomo, nessuno scroll-jacking ──
+          startLoop(renderer, scene, camera, () => mixerRef);
 
-        ScrollTrigger.create({
-          trigger: wrapper,
-          start:   'top top',
-          end:     isMobile ? 'bottom top' : 'bottom bottom',
-          scrub:   isMobile ? 0.4 : 1,
-          onUpdate(self) {
-            if (!mixerRef) return;
-            mixerRef.setTime(self.progress * clipDur);
-            renderer.render(scene, camera);
-            if (progEl) progEl.style.width = self.progress * 100 + '%';
-            if (hintEl && self.progress > 0.03) hintEl.classList.add('hidden');
-          },
-        });
+        } else {
+          // ── DESKTOP: scroll-jacking Apple-style ──
+          // Render loop senza mixer (il mixer viene aggiornato via setTime, non via update)
+          startLoop(renderer, scene, camera, () => null);
 
-        stop();
-        startLoop(renderer, scene, camera, () => null);
+          ScrollTrigger.create({
+            trigger: wrapper,
+            start:   'top top',
+            end:     'bottom bottom',
+            scrub:   1,
+            onUpdate(self) {
+              if (!mixerRef) return;
+              mixerRef.setTime(self.progress * clipDur);
+              renderer.render(scene, camera);
+              if (progEl) progEl.style.width = self.progress * 100 + '%';
+              if (hintEl && self.progress > 0.03) hintEl.classList.add('hidden');
+            },
+          });
+        }
 
       }).catch((err) => {
         console.warn('FBX load error:', modelPath, err);

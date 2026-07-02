@@ -172,16 +172,16 @@ body {
   background: var(--bg);
 }
 
-/* Desktop: sticky full-viewport */
+/* Desktop: sticky full-viewport — Apple-style scroll-jacking */
 @media (min-width: 768px) {
   .scroll-scene          { height: 300vh; }
   .scroll-scene__sticky  { position: sticky; top: 0; height: 100vh; }
 }
 
-/* Mobile: canvas stack, no sticky */
+/* Mobile: normale flow, canvas alto 70vw, animazione in loop autonomo */
 @media (max-width: 767px) {
-  .scroll-scene          { padding-bottom: 3rem; }
-  .scroll-scene__sticky  { height: 65vw; min-height: 260px; position: relative; }
+  .scroll-scene          { margin-bottom: 2.5rem; }
+  .scroll-scene__sticky  { position: relative; height: 72vw; min-height: 280px; }
 }
 
 /* Canvas always fills parent */
@@ -295,7 +295,7 @@ body {
 }
 .btn-anim:hover { background: #bef264; }
 
-/* Progress bar */
+/* Progress bar — desktop only */
 .scene-progress {
   position: absolute;
   bottom: 0; left: 0;
@@ -304,6 +304,10 @@ body {
   width: 0%;
   z-index: 20;
   transition: width .05s linear;
+}
+@media (max-width: 767px) {
+  .scene-progress { display: none; }
+  .scene-hint     { display: none; }
 }
 
 /* Scroll hint arrow inside sticky */
