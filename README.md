@@ -1,6 +1,6 @@
 # 🏋️ Calisthenics per Principianti
 
-Sito web interattivo con **animazioni 3D scroll-driven** per imparare gli esercizi di calisthenics a corpo libero. Nessun attrezzo richiesto.
+Sito web interattivo con **animazioni 3D** per imparare gli esercizi di calisthenics a corpo libero. Nessun attrezzo richiesto.
 
 🔗 **Live demo:** [luigiellebalotta.github.io/calisthenics](https://luigiellebalotta.github.io/calisthenics/)
 
@@ -25,11 +25,20 @@ La scheda completa è disponibile nel file [`scheda_calisthenics.pdf`](./scheda_
 
 ## ✨ Funzionalità
 
-- **Animazioni 3D scroll-driven** — ogni sezione anima il modello man mano che scorri
-- **Modelli FBX da Mixamo** — personaggi 3D reali con animazioni motion-captured
-- **Modale tutorial** — clicca "Vedi animazione" per un tutorial in loop con controlli orbitali
-- **Responsive** — funziona su desktop e mobile
-- **SEO ottimizzato** — meta tag, Open Graph, Twitter Card e Schema.org
+**Desktop**
+- Animazioni 3D **scroll-driven** (Apple-style) — il modello si muove frame-per-frame mentre scorri
+- Canvas `sticky` fullscreen, testo in overlay sul lato destro, modello visibile a sinistra
+- Barra di progresso verde che mostra quanta animazione hai visto
+
+**Mobile**
+- Animazione in **loop automatico** — nessuno scroll-jacking (non affidabile su Safari iOS)
+- Layout verticale: canvas + testo sotto
+- Bottone "Vedi animazione" per aprire il tutorial completo
+
+**Comune**
+- Modale con OrbitControls e autoRotate per ogni esercizio
+- SEO: meta tag, Open Graph, Twitter Card, Schema.org
+- Lazy-load dei modelli FBX (caricati solo quando entrano nel viewport)
 
 ---
 
@@ -37,27 +46,25 @@ La scheda completa è disponibile nel file [`scheda_calisthenics.pdf`](./scheda_
 
 | Libreria | Versione | Uso |
 |----------|----------|-----|
-| [Three.js](https://threejs.org/) | r169 | Rendering 3D e FBXLoader |
-| [GSAP](https://gsap.com/) | 3.12 | Animazioni scroll + ScrollTrigger |
-| [Tailwind CSS](https://tailwindcss.com/) | Play CDN | Styling utility-first |
+| [Three.js](https://threejs.org/) | r169 | Rendering 3D, FBXLoader, AnimationMixer |
+| [GSAP](https://gsap.com/) | 3.12 | Animazioni UI + ScrollTrigger scrub |
 
-Zero build step — basta aprire `index.html` con qualsiasi server locale (es. Live Server).
+CSS vanilla, zero framework, zero build step.
 
 ---
 
 ## 🚀 Come avviarlo in locale
 
 ```bash
-# Clona il repo
 git clone https://github.com/LuigiElleBalotta/calisthenics.git
 cd calisthenics
 
-# Apri con Live Server (VS Code / Kiro) oppure:
-npx serve .
-# → http://localhost:3000
+# Con Live Server (Kiro / VS Code) → localhost:5500
+# oppure:
+npx serve .   # → localhost:3000
 ```
 
-> ⚠️ I modelli FBX vengono caricati via fetch relativa, quindi serve un server HTTP — aprire `index.html` direttamente nel browser (protocollo `file://`) non funziona.
+> ⚠️ Serve un server HTTP — `file://` non funziona perché i moduli ES e i file FBX richiedono HTTP.
 
 ---
 
@@ -65,16 +72,23 @@ npx serve .
 
 ```
 calisthenics/
-├── index.html              # App principale
-├── models/                 # Modelli FBX scaricati da Mixamo
+├── index.html              # Markup HTML
+├── style.css               # Tutti gli stili
+├── app.js                  # ES module — Three.js + GSAP
+├── models/                 # Modelli FBX da Mixamo
 │   ├── Air Squat.fbx
 │   ├── Push Up.fbx
 │   ├── Plank.fbx
 │   ├── Crouching.fbx
 │   ├── Situps.fbx
 │   ├── Burpee.fbx
+│   ├── Arm Stretching.fbx
+│   ├── Twist Dance.fbx
+│   ├── Neck Stretching.fbx
+│   ├── Praying.fbx
 │   └── Jumping Jacks.fbx
 ├── scheda_calisthenics.pdf # Scheda originale
+├── CLAUDE.md               # Regole per chi sviluppa
 └── README.md
 ```
 
