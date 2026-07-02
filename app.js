@@ -38,18 +38,89 @@ const EXERCISES = {
   superman: {
     title: 'Superman',
     reps:  '10 ripetizioni',
-    model: 'models/Situps.fbx',
+    model: 'models/Plank.fbx',
+    proceduralClip: 'superman',
     desc:  "A pancia in giù, braccia tese in avanti. Solleva braccia, petto e gambe insieme mantenendo lo sguardo verso il basso. Tieni 2-3 secondi, poi scendi lentamente.",
     tips:  ['Tutto si solleva in un unico movimento', 'Sguardo a terra per proteggere il collo', 'Discesa sempre controllata'],
   },
   glutebridge: {
     title: 'Glute Bridge',
     reps:  '12-15 ripetizioni',
-    model: 'models/Burpee.fbx',
+    model: 'models/Plank.fbx',
+    proceduralClip: 'glutebridge',
     desc:  "Schiena a terra, ginocchia piegate, piedi vicino ai glutei. Spingi i talloni e solleva il bacino contraendo i glutei. Linea retta spalle-ginocchia. Scendi lentamente.",
     tips:  ['Contrai i glutei in cima al movimento', 'Talloni spingono forte a terra', 'Non far cadere il bacino di colpo'],
   },
 };
+
+// ─── Procedural animation clips ───────────────────────────────────────────
+const DEG = Math.PI / 180;
+
+function quatFromEuler(x, y, z) {
+  const q = new THREE.Quaternion();
+  q.setFromEuler(new THREE.Euler(x * DEG, y * DEG, z * DEG, 'XYZ'));
+  return [q.x, q.y, q.z, q.w];
+}
+
+function makeQuatTrack(boneName, times, eulers) {
+  const values = eulers.flatMap(([x, y, z]) => quatFromEuler(x, y, z));
+  return new THREE.QuaternionKeyframeTrack(`${boneName}.quaternion`, times, values);
+}
+
+function buildSupermanClip() {
+  const T = [0, 0.1, 1.8, 3.0, 4.0];
+  return new THREE.AnimationClip('superman', 4, [
+    // Hips: prone face-down. At peak arch slightly upward.
+    makeQuatTrack('mixamorigHips', T, [
+      [-90, 0, 0], [-90, 0, 0], [-78, 0, 0], [-78, 0, 0], [-90, 0, 0],
+    ]),
+    // Spine arches back at peak
+    makeQuatTrack('mixamorigSpine',  T, [[0,0,0],[0,0,0],[22,0,0],[22,0,0],[0,0,0]]),
+    makeQuatTrack('mixamorigSpine1', T, [[0,0,0],[0,0,0],[18,0,0],[18,0,0],[0,0,0]]),
+    makeQuatTrack('mixamorigSpine2', T, [[0,0,0],[0,0,0],[12,0,0],[12,0,0],[0,0,0]]),
+    // Left arm stretched forward then lifts slightly
+    makeQuatTrack('mixamorigLeftArm', T, [
+      [-5, 0, -165], [-5, 0, -165], [-5, 0, -155], [-5, 0, -155], [-5, 0, -165],
+    ]),
+    makeQuatTrack('mixamorigRightArm', T, [
+      [-5, 0, 165], [-5, 0, 165], [-5, 0, 155], [-5, 0, 155], [-5, 0, 165],
+    ]),
+    // Legs lift at hip
+    makeQuatTrack('mixamorigLeftUpLeg',  T, [[0,0,0],[0,0,0],[-22,0,0],[-22,0,0],[0,0,0]]),
+    makeQuatTrack('mixamorigRightUpLeg', T, [[0,0,0],[0,0,0],[-22,0,0],[-22,0,0],[0,0,0]]),
+  ]);
+}
+
+function buildGluteBridgeClip() {
+  const T = [0, 0.1, 1.5, 2.5, 3.5];
+  return new THREE.AnimationClip('glutebridge', 3.5, [
+    // Hips supine (face up = +90 on X), then drive up
+    makeQuatTrack('mixamorigHips', T, [
+      [90, 0, 0], [90, 0, 0], [42, 0, 0], [42, 0, 0], [90, 0, 0],
+    ]),
+    makeQuatTrack('mixamorigSpine', T, [
+      [0,0,0],[0,0,0],[-8,0,0],[-8,0,0],[0,0,0],
+    ]),
+    // Knees bent: UpLeg angles forward, Leg angles back to keep feet on ground
+    makeQuatTrack('mixamorigLeftUpLeg', T, [
+      [-75,0,0],[-75,0,0],[-48,0,0],[-48,0,0],[-75,0,0],
+    ]),
+    makeQuatTrack('mixamorigRightUpLeg', T, [
+      [-75,0,0],[-75,0,0],[-48,0,0],[-48,0,0],[-75,0,0],
+    ]),
+    makeQuatTrack('mixamorigLeftLeg', T, [
+      [75,0,0],[75,0,0],[50,0,0],[50,0,0],[75,0,0],
+    ]),
+    makeQuatTrack('mixamorigRightLeg', T, [
+      [75,0,0],[75,0,0],[50,0,0],[50,0,0],[75,0,0],
+    ]),
+    // Arms relaxed at sides on floor
+    makeQuatTrack('mixamorigLeftArm',  T, [[0,0,-40],[0,0,-40],[0,0,-40],[0,0,-40],[0,0,-40]]),
+    makeQuatTrack('mixamorigRightArm', T, [[0,0, 40],[0,0, 40],[0,0, 40],[0,0, 40],[0,0, 40]]),
+  ]);
+}
+
+const PROCEDURAL_CLIPS = { superman: buildSupermanClip, glutebridge: buildGluteBridgeClip };
 
 function buildScene(canvas) {
   const W = canvas.offsetWidth  || 400;
@@ -114,7 +185,7 @@ function watchResize(canvas, camera, renderer) {
   return ro;
 }
 
-function loadFBX(path, scene) {
+function loadFBX(path, scene, proceduralClipName) {
   return new Promise((resolve, reject) => {
     new FBXLoader().load(
       path,
@@ -133,6 +204,12 @@ function loadFBX(path, scene) {
         const cen  = box2.getCenter(new THREE.Vector3());
         obj.position.set(-cen.x, -box2.min.y, -cen.z);
         scene.add(obj);
+
+        // Replace animations with procedural clip if requested
+        if (proceduralClipName && PROCEDURAL_CLIPS[proceduralClipName]) {
+          obj.animations = [PROCEDURAL_CLIPS[proceduralClipName]()];
+        }
+
         resolve(obj);
       },
       undefined,
@@ -177,6 +254,7 @@ function initScrollScenes() {
   document.querySelectorAll('.scroll-scene').forEach((wrapper) => {
     const exId      = wrapper.dataset.exercise;
     const modelPath = wrapper.dataset.model;
+    const exData    = EXERCISES[exId];
     const canvas    = wrapper.querySelector('.scene-canvas');
     const spinEl    = wrapper.querySelector('.spinner');
     const progEl    = wrapper.querySelector('.scene-progress');
@@ -205,7 +283,7 @@ function initScrollScenes() {
       const { renderer, scene, camera } = buildScene(canvas);
       const ro   = watchResize(canvas, camera, renderer);
 
-      loadFBX(modelPath, scene).then((obj) => {
+      loadFBX(modelPath, scene, exData?.proceduralClip).then((obj) => {
         spinEl.style.display = 'none';
         canvas.style.opacity = '1';
 
@@ -313,7 +391,7 @@ function initModal() {
     modalTick();
     stopFn = () => cancelAnimationFrame(mId);
 
-    loadFBX(data.model, scene).then((obj) => {
+    loadFBX(data.model, scene, data.proceduralClip).then((obj) => {
       modalLoader.style.display = 'none';
       modalCanvas.style.opacity = '1';
       if (obj.animations.length) {
