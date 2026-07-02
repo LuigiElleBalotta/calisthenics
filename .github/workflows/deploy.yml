@@ -20,11 +20,12 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Inject cache-busting version into index.html
+      - name: Inject cache-busting version
         run: |
           SHA=$(echo "${{ github.sha }}" | cut -c1-8)
           sed -i "s|style\.css\"|style.css?v=${SHA}\"|g" index.html
@@ -41,4 +42,8 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
+        timeout-minutes: 10
         uses: actions/deploy-pages@v4
+        with:
+          # Non fallire il workflow se Pages impiega troppo a rispondere
+          error_on_deploy_status_failure: false
