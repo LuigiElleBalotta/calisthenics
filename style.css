@@ -329,7 +329,7 @@ body {
 }
 .scene-hint.hidden { display: none; }
 
-/* Divider between exercises */
+/* Divider between exercises — desktop only */
 .ex-divider {
   display: flex;
   align-items: center;
@@ -346,6 +346,9 @@ body {
   flex: 1;
   border: none;
   border-top: 1px solid var(--border);
+}
+@media (max-width: 767px) {
+  .ex-divider { display: none; }
 }
 
 /* Spinner */
