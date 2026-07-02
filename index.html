@@ -1,375 +1,390 @@
 <!DOCTYPE html>
 <html lang="it" prefix="og: https://ogp.me/ns#">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calisthenics per Principianti | Allenamento 3D a Corpo Libero</title>
-  <meta name="description" content="Scheda calisthenics per principianti con animazioni 3D interattive. 6 esercizi a corpo libero senza attrezzi: squat, push-up, plank, affondi, superman e glute bridge."/>
-  <meta name="keywords" content="calisthenics principianti, allenamento corpo libero, esercizi casa senza attrezzi, squat, push-up, plank, affondi, superman, glute bridge"/>
-  <meta name="author" content="Luigi Balotta"/>
-  <meta name="robots" content="index, follow"/>
-  <link rel="canonical" href="https://luigiellebalotta.github.io/calisthenics/"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://luigiellebalotta.github.io/calisthenics/"/>
-  <meta property="og:title" content="Calisthenics per Principianti | Animazioni 3D"/>
-  <meta property="og:description" content="Allenamento a corpo libero con animazioni 3D scroll-driven. Squat, push-up, plank e altro."/>
-  <meta property="og:image" content="https://luigiellebalotta.github.io/calisthenics/og-image.png"/>
-  <meta property="og:locale" content="it_IT"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Calisthenics per Principianti | Animazioni 3D"/>
-  <meta name="twitter:description" content="Allenamento a corpo libero con animazioni 3D interattive."/>
-  <meta name="twitter:image" content="https://luigiellebalotta.github.io/calisthenics/og-image.png"/>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Calisthenics per Principianti","description":"Scheda calisthenics con animazioni 3D interattive","url":"https://luigiellebalotta.github.io/calisthenics/","inLanguage":"it","author":{"@type":"Person","name":"Luigi Balotta"}}</script>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏋️</text></svg>"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calisthenics per Principianti | Allenamento a Corpo Libero 3D</title>
+  <meta name="description" content="Scheda calisthenics per principianti con animazioni 3D interattive. 6 esercizi a corpo libero da fare a casa senza attrezzi: squat, push-up, plank, affondi, superman e glute bridge." />
+  <meta name="keywords" content="calisthenics principianti, allenamento corpo libero, esercizi casa senza attrezzi, squat, push-up, plank, affondi, superman, glute bridge" />
+  <meta name="author" content="Luigi Balotta" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://luigiellebalotta.github.io/calisthenics/" />
 
-  <!-- GSAP (global, before module script) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://luigiellebalotta.github.io/calisthenics/" />
+  <meta property="og:title" content="Calisthenics per Principianti | Allenamento 3D a Corpo Libero" />
+  <meta property="og:description" content="Scopri la scheda calisthenics per principianti con animazioni 3D scroll-driven. 6 esercizi senza attrezzi, tutorial interattivi." />
+  <meta property="og:image" content="https://luigiellebalotta.github.io/calisthenics/og-image.png" />
+  <meta property="og:locale" content="it_IT" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Calisthenics per Principianti | Animazioni 3D" />
+  <meta name="twitter:description" content="Allenamento a corpo libero con animazioni 3D interattive. Nessun attrezzo richiesto." />
+  <meta name="twitter:image" content="https://luigiellebalotta.github.io/calisthenics/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Calisthenics per Principianti",
+    "description": "Scheda calisthenics per principianti con animazioni 3D interattive.",
+    "url": "https://luigiellebalotta.github.io/calisthenics/",
+    "inLanguage": "it",
+    "author": { "@type": "Person", "name": "Luigi Balotta" }
+  }
+  </script>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏋️</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --lime: #a3e635;
-      --lime-dim: #4d7c0f;
-      --bg: #09090b;
-      --surface: #18181b;
-      --border: #27272a;
-      --text: #fafafa;
-      --muted: #71717a;
-    }
-
-    html { scroll-behavior: auto; } /* NO smooth scroll — lo gestiamo noi */
-    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; overflow-x: hidden; }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center; padding: 2rem;
-      background: radial-gradient(ellipse 90% 60% at 50% -10%, rgba(163,230,53,.12) 0%, transparent 70%);
-    }
-    #hero h1 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; line-height: 1.05; }
-    #hero h1 span { color: var(--lime); }
-    #hero p { color: var(--muted); max-width: 36rem; margin: 1.25rem auto; font-size: 1.1rem; line-height: 1.6; }
-    .hero-cta { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
-    .btn-primary { padding: .75rem 2rem; background: var(--lime); color: #09090b; font-weight: 700; border-radius: 9999px; text-decoration: none; font-size: .9rem; letter-spacing: .05em; text-transform: uppercase; transition: background .2s; }
-    .btn-primary:hover { background: #bef264; }
-    .btn-outline { padding: .75rem 2rem; border: 1px solid var(--border); color: var(--muted); border-radius: 9999px; text-decoration: none; font-size: .9rem; letter-spacing: .05em; text-transform: uppercase; transition: all .2s; }
-    .btn-outline:hover { border-color: var(--lime); color: var(--lime); }
-    .hero-stats { display: flex; gap: 3rem; margin-top: 3rem; }
-    .hero-stats div p:first-child { font-size: 2rem; font-weight: 900; color: var(--lime); }
-    .hero-stats div p:last-child { font-size: .75rem; color: var(--muted); margin-top: .2rem; }
-    .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: .5rem; color: var(--muted); font-size: .75rem; }
-    .scroll-hint-line { width: 1px; height: 2.5rem; background: linear-gradient(to bottom, var(--muted), transparent); }
-
-    /* ── SECTION HEADERS (non-sticky) ── */
-    .phase-header { padding: 6rem 1.5rem 3rem; text-align: center; }
-    .phase-label { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: var(--lime); margin-bottom: .5rem; }
-    .phase-header h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; }
-    .phase-header p { color: var(--muted); margin-top: .75rem; max-width: 32rem; margin-left: auto; margin-right: auto; font-size: .95rem; }
-
-    /* ── SCROLL-JACKED EXERCISE ── */
-    /* The outer wrapper provides scroll space (height = scroll-distance).
-       The inner sticky container fills 100vh and sticks while scrolling. */
-    .ex-scroll-space {
-      position: relative;
-      height: 300vh; /* amount of scroll = animation travel */
-    }
-    .ex-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    /* Full-bleed canvas */
-    .ex-canvas-container {
-      position: absolute;
-      inset: 0;
-    }
-    .ex-canvas-container canvas {
-      width: 100%; height: 100%; display: block;
-    }
-
-    /* Gradient overlay so text is readable */
-    .ex-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, rgba(9,9,11,.92) 0%, rgba(9,9,11,.6) 45%, rgba(9,9,11,.05) 100%);
-      pointer-events: none;
-    }
-
-    /* Info panel */
-    .ex-info {
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: min(480px, 50%);
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 2.5rem 3rem;
-    }
-    .ex-num { font-size: 5rem; font-weight: 900; color: var(--lime); opacity: .15; line-height: 1; margin-bottom: -.5rem; }
-    .ex-tag { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: var(--lime); margin-bottom: .5rem; }
-    .ex-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; line-height: 1.1; margin-bottom: 1rem; }
-    .ex-desc { color: var(--muted); font-size: .95rem; line-height: 1.7; margin-bottom: 1.5rem; }
-    .ex-tips { list-style: none; display: flex; flex-direction: column; gap: .4rem; margin-bottom: 2rem; }
-    .ex-tips li { font-size: .85rem; color: #a1a1aa; }
-    .ex-tips li::before { content: '✦ '; color: var(--lime); }
-    .ex-btn { align-self: flex-start; padding: .7rem 1.75rem; background: var(--lime); color: #09090b; font-weight: 700; border: none; border-radius: 9999px; font-size: .85rem; letter-spacing: .05em; text-transform: uppercase; cursor: pointer; transition: background .2s; }
-    .ex-btn:hover { background: #bef264; }
-
-    /* Progress bar (bottom of sticky) */
-    .ex-progress-bar {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--border);
-    }
-    .ex-progress-fill {
-      height: 100%;
-      background: var(--lime);
-      width: 0%;
-      transition: width .05s linear;
-    }
-
-    /* Loading spinner */
-    .spinner {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 36px; height: 36px;
-      border: 2px solid rgba(255,255,255,.1);
-      border-top-color: var(--lime);
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-    }
-    @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
-
-    /* ── MODAL ── */
-    #modal-backdrop {
-      position: fixed; inset: 0; z-index: 100;
-      background: rgba(0,0,0,.85);
-      backdrop-filter: blur(10px);
-      display: none; align-items: center; justify-content: center;
-      padding: 1rem;
-    }
-    #modal-backdrop.open { display: flex; }
-    #modal-box {
-      width: 100%; max-width: 900px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 1.5rem;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-    @media (max-width: 640px) { #modal-box { grid-template-columns: 1fr; } }
-    #modal-canvas-wrap { position: relative; min-height: 360px; background: var(--bg); }
-    #modal-canvas-wrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-    #modal-info { padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; }
-    #modal-reps { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: var(--lime); margin-bottom: .4rem; }
-    #modal-title { font-size: 1.75rem; font-weight: 900; margin-bottom: 1rem; }
-    #modal-desc { color: var(--muted); font-size: .9rem; line-height: 1.7; margin-bottom: 1rem; }
-    #modal-tips { list-style: none; display: flex; flex-direction: column; gap: .35rem; }
-    #modal-tips li { font-size: .82rem; color: #a1a1aa; }
-    #modal-tips li::before { content: '✦ '; color: var(--lime); }
-    #modal-close { margin-top: 1.5rem; padding: .6rem 1.5rem; border: 1px solid var(--border); background: transparent; color: var(--muted); border-radius: 9999px; font-size: .85rem; cursor: pointer; transition: all .2s; align-self: flex-start; }
-    #modal-close:hover { border-color: var(--lime); color: var(--lime); }
-
-    /* ── COOLDOWN CARDS ── */
-    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; padding: 0 1.5rem 6rem; max-width: 960px; margin: 0 auto; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; }
-    .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
-    .card p { color: var(--muted); font-size: .85rem; line-height: 1.6; }
-
-    /* ── FOOTER ── */
-    footer { text-align: center; padding: 3rem 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .8rem; }
-    footer a { color: #71717a; text-decoration: none; transition: color .2s; }
-    footer a:hover { color: var(--lime); }
-
-    /* ── MOBILE adjustments ── */
-    @media (max-width: 640px) {
-      .ex-info { width: 100%; padding: 1.5rem; justify-content: flex-end; padding-bottom: 3rem; }
-      .ex-overlay { background: linear-gradient(to top, rgba(9,9,11,.95) 0%, rgba(9,9,11,.5) 60%, rgba(9,9,11,.05) 100%); }
-      .ex-num { font-size: 3rem; }
-    }
-  </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════
-     DEFATICAMENTO
-════════════════════════════════════════════ -->
-<section class="py-20 md:py-24 px-5 max-w-4xl mx-auto">
-  <div class="mb-10 text-center">
-    <p class="text-lime-400 text-xs uppercase tracking-widest mb-2">Alla fine</p>
-    <h2 class="text-3xl md:text-4xl font-black">Defaticamento</h2>
-    <p class="text-zinc-400 mt-3 text-sm">Tieni ogni posizione 20-30 secondi, respirando con calma.</p>
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section id="hero">
+  <p class="section-label opacity-0" id="hero-tag">Allenamento a corpo libero</p>
+  <h1 class="opacity-0" id="hero-title">
+    Calisthenics<br /><span>per Principianti</span>
+  </h1>
+  <p class="hero-sub opacity-0" id="hero-sub">
+    3 giri del circuito &middot; 60-90 sec di riposo &middot; 2-3 sessioni a settimana<br />
+    Nessun attrezzo richiesto.
+  </p>
+  <div class="hero-cta opacity-0" id="hero-cta">
+    <a href="#exercises" class="btn-primary">Inizia ora</a>
+    <a href="scheda_calisthenics.pdf" class="btn-outline" target="_blank" rel="noopener">Scheda PDF</a>
   </div>
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 warmup-card opacity-0">
-      <h3 class="font-bold text-base mb-1">Stretching coscia posteriore</h3>
-      <p class="text-zinc-400 text-sm">Seduto, gambe tese. Piega il busto in avanti dal bacino verso i piedi.</p>
-    </div>
-    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 warmup-card opacity-0">
-      <h3 class="font-bold text-base mb-1">Stretching quadricipite</h3>
-      <p class="text-zinc-400 text-sm">In piedi, tallone verso i glutei, ginocchia vicine. 20-30 sec per gamba.</p>
-    </div>
-    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 warmup-card opacity-0">
-      <h3 class="font-bold text-base mb-1">Stretching petto e spalle</h3>
-      <p class="text-zinc-400 text-sm">Mani dietro la schiena, dita intrecciate, apri il petto.</p>
-    </div>
-    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 warmup-card opacity-0">
-      <h3 class="font-bold text-base mb-1">Stretching schiena bassa</h3>
-      <p class="text-zinc-400 text-sm">Posizione del bambino: inginocchiati, busto avanti, fronte a terra.</p>
-    </div>
+  <div class="hero-stats opacity-0" id="hero-stats">
+    <div><p class="stat-num">6</p><p class="stat-label">Esercizi</p></div>
+    <div><p class="stat-num">3</p><p class="stat-label">Giri</p></div>
+    <div><p class="stat-num">0</p><p class="stat-label">Attrezzi</p></div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scorri</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════ -->
-<footer class="text-center py-14 text-zinc-600 text-sm border-t border-zinc-900">
-  <p>Scheda calisthenics per principianti &mdash; Animazioni via
-    <a href="https://mixamo.com" class="text-zinc-500 hover:text-lime-400 transition" target="_blank" rel="noopener">Mixamo</a>
-  </p>
-</footer>
+<!-- ══════════════════════════════════════
+     RISCALDAMENTO
+══════════════════════════════════════ -->
+<div class="section-header">
+  <p class="section-label">Fase 1 &mdash; Prima di iniziare</p>
+  <h2>Riscaldamento</h2>
+  <p>5 minuti di movimenti lenti per mobilizzare le articolazioni.</p>
+</div>
 
-<!-- ════════════════════════════════════════════
-     MODALE
-════════════════════════════════════════════ -->
-<div id="modal-backdrop"
-     class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-3 md:p-6">
-  <div id="modal-box"
-       class="relative w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-2xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row shadow-2xl max-h-[90vh]">
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-icon">💪</div>
+    <h3>Rotazioni braccia e spalle</h3>
+    <p>Braccia tese lateralmente. Cerchi ampi prima in una direzione poi nell'altra, 15-20 sec per verso.</p>
+  </div>
+  <div class="card">
+    <div class="card-icon">🔄</div>
+    <h3>Rotazioni anche</h3>
+    <p>Mani sui fianchi. Ruota il bacino come l'hula hoop. 8-10 giri per direzione.</p>
+  </div>
+  <div class="card">
+    <div class="card-icon">🦶</div>
+    <h3>Rotazioni caviglie</h3>
+    <p>Appoggiati a una parete. Solleva un piede e ruota la caviglia. 8-10 giri per piede.</p>
+  </div>
+</div>
 
-    <!-- Canvas -->
-    <div class="relative w-full md:w-1/2 h-56 sm:h-72 md:h-auto md:min-h-[480px] bg-zinc-900 flex-shrink-0">
-      <div class="spinner" id="modal-loader"></div>
-      <canvas id="modal-canvas" class="absolute inset-0 w-full h-full opacity-0"></canvas>
-    </div>
+<!-- ══════════════════════════════════════
+     CIRCUITO — intestazione
+══════════════════════════════════════ -->
+<div id="exercises" class="section-header">
+  <p class="section-label">Fase 2 &mdash; Il circuito</p>
+  <h2>Gli Esercizi</h2>
+  <p>Scorri lentamente — l'animazione 3D si muove insieme a te.</p>
+</div>
 
-    <!-- Testo -->
-    <div class="p-5 md:p-8 flex flex-col justify-between overflow-y-auto">
-      <div>
-        <p class="text-zinc-500 text-xs uppercase tracking-widest mb-1" id="modal-reps"></p>
-        <h3 class="text-2xl md:text-3xl font-black mb-3" id="modal-title"></h3>
-        <p class="text-zinc-400 text-sm leading-relaxed mb-4" id="modal-desc"></p>
-        <ul class="space-y-1.5 text-sm text-zinc-500" id="modal-tips"></ul>
-      </div>
-      <button id="modal-close"
-              class="mt-6 md:mt-8 px-6 py-2.5 border border-zinc-700 text-zinc-300 font-semibold rounded-full text-sm hover:border-lime-400 hover:text-lime-400 transition w-fit">
-        Chiudi
+<!-- ══════════════════════════════════════
+     ESERCIZIO 01 — SQUAT
+══════════════════════════════════════ -->
+<div class="scroll-scene" data-exercise="squat" data-model="models/Air Squat.fbx">
+  <div class="scroll-scene__sticky">
+    <div class="spinner"></div>
+    <canvas class="scene-canvas"></canvas>
+    <div class="scene-gradient"></div>
+    <div class="scene-progress"></div>
+
+    <div class="scene-info">
+      <p class="scene-num">01</p>
+      <p class="scene-tag">10-15 ripetizioni</p>
+      <h2 class="scene-title">Squat</h2>
+      <p class="scene-desc">
+        Piedi alla larghezza delle spalle, punte leggermente verso l'esterno.
+        Spingi il bacino indietro come se ti sedessi su una sedia, schiena dritta.
+        Scendi a cosce parallele al pavimento, risali spingendo sui talloni.
+      </p>
+      <ul class="scene-tips">
+        <li>Ginocchia in linea con i piedi</li>
+        <li>Schiena dritta per tutto il movimento</li>
+        <li>Talloni sempre a contatto col pavimento</li>
+      </ul>
+      <button class="btn-anim" data-exercise="squat">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Vedi animazione
       </button>
     </div>
+
+    <div class="scene-hint">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+      <span>Scorri</span>
+    </div>
   </div>
 </div>
+<div class="ex-divider"><span>01</span><hr /></div>
 
-<!-- ═══════ HERO ═══════ -->
-<section id="hero" style="position:relative">
-  <p class="phase-label" style="padding:0;margin-bottom:.5rem" id="hero-tag">Allenamento a corpo libero</p>
-  <h1 id="hero-title">Calisthenics<br/><span>per Principianti</span></h1>
-  <p id="hero-sub">3 giri del circuito · 60-90 sec di riposo<br/>2-3 sessioni a settimana · Nessun attrezzo</p>
-  <div class="hero-cta" id="hero-cta">
-    <a href="#warmup-start" class="btn-primary">Inizia ora</a>
-    <a href="scheda_calisthenics.pdf" class="btn-outline" target="_blank" rel="noopener">Scarica scheda PDF</a>
+<!-- ══════════════════════════════════════
+     ESERCIZIO 02 — PUSH-UP
+══════════════════════════════════════ -->
+<div class="scroll-scene" data-exercise="pushup" data-model="models/Push Up.fbx">
+  <div class="scroll-scene__sticky">
+    <div class="spinner"></div>
+    <canvas class="scene-canvas"></canvas>
+    <div class="scene-gradient"></div>
+    <div class="scene-progress"></div>
+
+    <div class="scene-info">
+      <p class="scene-num">02</p>
+      <p class="scene-tag">6-10 ripetizioni</p>
+      <h2 class="scene-title">Push-up sulle ginocchia</h2>
+      <p class="scene-desc">
+        Mani più larghe delle spalle, ginocchia a terra. Corpo dritto dalla testa alle ginocchia.
+        Scendi col petto a sfiorare il pavimento, poi risali spingendo.
+      </p>
+      <ul class="scene-tips">
+        <li>Corpo in linea dalla testa alle ginocchia</li>
+        <li>Gomiti a 45° rispetto al busto</li>
+        <li>Petto quasi a toccare il pavimento</li>
+      </ul>
+      <button class="btn-anim" data-exercise="pushup">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Vedi animazione
+      </button>
+    </div>
+
+    <div class="scene-hint">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+      <span>Scorri</span>
+    </div>
   </div>
-  <div class="hero-stats" id="hero-stats">
-    <div><p>6</p><p>Esercizi</p></div>
-    <div><p>3</p><p>Giri</p></div>
-    <div><p>0</p><p>Attrezzi</p></div>
+</div>
+<div class="ex-divider"><span>02</span><hr /></div>
+
+<!-- ══════════════════════════════════════
+     ESERCIZIO 03 — PLANK
+══════════════════════════════════════ -->
+<div class="scroll-scene" data-exercise="plank" data-model="models/Plank.fbx">
+  <div class="scroll-scene__sticky">
+    <div class="spinner"></div>
+    <canvas class="scene-canvas"></canvas>
+    <div class="scene-gradient"></div>
+    <div class="scene-progress"></div>
+
+    <div class="scene-info">
+      <p class="scene-num">03</p>
+      <p class="scene-tag">20-30 secondi</p>
+      <h2 class="scene-title">Plank</h2>
+      <p class="scene-desc">
+        Avambracci a terra, gomiti sotto le spalle. Corpo in linea retta dalla testa ai piedi.
+        Contrai addome e glutei, respira normalmente e mantieni la posizione.
+      </p>
+      <ul class="scene-tips">
+        <li>Gomiti direttamente sotto le spalle</li>
+        <li>Bacino né alto né basso</li>
+        <li>Sguardo verso il basso, collo neutro</li>
+      </ul>
+      <button class="btn-anim" data-exercise="plank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Vedi animazione
+      </button>
+    </div>
+
+    <div class="scene-hint">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+      <span>Scorri</span>
+    </div>
   </div>
-  <div class="scroll-hint"><span>Scorri</span><div class="scroll-hint-line"></div></div>
-</section>
-
-<!-- ═══════ RISCALDAMENTO ═══════ -->
-<div id="warmup-start" class="phase-header">
-  <p class="phase-label">Fase 1</p>
-  <h2>Riscaldamento</h2>
-  <p>5 minuti di movimenti lenti e controllati per mobilizzare le articolazioni.</p>
 </div>
+<div class="ex-divider"><span>03</span><hr /></div>
 
-<!-- ════════════════════════════════════════════
-     IMPORTMAP + SCRIPT PRINCIPALE
-════════════════════════════════════════════ -->
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
-  }
-}
-</script>
+<!-- ══════════════════════════════════════
+     ESERCIZIO 04 — AFFONDI
+══════════════════════════════════════ -->
+<div class="scroll-scene" data-exercise="lunge" data-model="models/Crouching.fbx">
+  <div class="scroll-scene__sticky">
+    <div class="spinner"></div>
+    <canvas class="scene-canvas"></canvas>
+    <div class="scene-gradient"></div>
+    <div class="scene-progress"></div>
 
-<script type="module">
-import * as THREE from 'three';
-import { FBXLoader }     from 'three/addons/loaders/FBXLoader.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    <div class="scene-info">
+      <p class="scene-num">04</p>
+      <p class="scene-tag">8-10 per gamba</p>
+      <h2 class="scene-title">Affondi</h2>
+      <p class="scene-desc">
+        Passo avanti, scendi piegando le ginocchia a 90°. Il ginocchio davanti non supera
+        la punta del piede, quello posteriore sfiora il pavimento. Risali e alterna le gambe.
+      </p>
+      <ul class="scene-tips">
+        <li>Busto sempre eretto</li>
+        <li>Ginocchio posteriore a sfiorare il pavimento</li>
+        <li>Ginocchio anteriore non oltre la punta del piede</li>
+      </ul>
+      <button class="btn-anim" data-exercise="lunge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Vedi animazione
+      </button>
+    </div>
 
-// ─── alias GSAP globals ───────────────────────────────────────────────────
-const gsap = window.gsap;
-const ScrollTrigger = window.ScrollTrigger;
-gsap.registerPlugin(ScrollTrigger);
-
-// ─── Dati esercizi ────────────────────────────────────────────────────────
-const EXERCISES = {
-  squat:       { title:'Squat',                    reps:'10-15 ripetizioni', model:'models/Air Squat.fbx',
-    desc:'Piedi alla larghezza delle spalle, punte leggermente all\'esterno. Spingi il bacino indietro come se ti sedessi su una sedia, schiena dritta. Scendi a cosce parallele al pavimento, risali spingendo sui talloni.',
-    tips:['Ginocchia in linea con i piedi','Schiena dritta per tutto il movimento','Talloni sempre a contatto col pavimento'] },
-  pushup:      { title:'Push-up sulle ginocchia',  reps:'6-10 ripetizioni',  model:'models/Push Up.fbx',
-    desc:'Mani più larghe delle spalle, ginocchia a terra. Corpo dritto dalla testa alle ginocchia. Scendi col petto a sfiorare il pavimento, risali spingendo.',
-    tips:['Corpo in linea dalla testa alle ginocchia','Gomiti a 45° rispetto al busto','Petto quasi a toccare il pavimento'] },
-  plank:       { title:'Plank',                    reps:'20-30 secondi',     model:'models/Plank.fbx',
-    desc:'Avambracci a terra, gomiti sotto le spalle. Corpo in linea retta dalla testa ai piedi. Contrai addome e glutei, respira normalmente.',
-    tips:['Gomiti direttamente sotto le spalle','Bacino né alto né basso','Sguardo verso il basso, collo neutro'] },
-  lunge:       { title:'Affondi (Lunge)',           reps:'8-10 per gamba',    model:'models/Crouching.fbx',
-    desc:'Passo avanti, scendi piegando le ginocchia a 90°. Il ginocchio davanti non supera la punta del piede, quello posteriore sfiora il pavimento. Risali e alterna.',
-    tips:['Busto sempre eretto','Ginocchio posteriore a sfiorare il pavimento','Ginocchio anteriore non oltre la punta del piede'] },
-  superman:    { title:'Superman',                  reps:'10 ripetizioni',    model:'models/Situps.fbx',
-    desc:'A pancia in giù, braccia tese in avanti. Solleva braccia, petto e gambe insieme mantenendo lo sguardo verso il basso. Tieni 2-3 secondi, scendi lentamente.',
-    tips:['Tutto si solleva in un unico movimento','Sguardo a terra per proteggere il collo','Discesa sempre controllata'] },
-  glutebridge: { title:'Glute Bridge',              reps:'12-15 ripetizioni', model:'models/Burpee.fbx',
-    desc:'Schiena a terra, ginocchia piegate, piedi vicino ai glutei. Spingi i talloni e solleva il bacino contraendo i glutei fino a una linea retta. Scendi lentamente.',
-    tips:['Contrai i glutei in cima al movimento','Talloni spingono forte a terra','Non far cadere il bacino di colpo'] },
-};
-
-<!-- Exercise sections injected by JS -->
-<div id="exercises-mount"></div>
-
-<!-- ═══════ CIRCUITO ═══════ -->
-<div id="circuit-start" class="phase-header">
-  <p class="phase-label">Fase 2</p>
-  <h2>Circuito Principale</h2>
-  <p>3 giri completi. Scorri per vedere ogni esercizio in azione.</p>
+    <div class="scene-hint">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+      <span>Scorri</span>
+    </div>
+  </div>
 </div>
-<div id="circuit-mount"></div>
+<div class="ex-divider"><span>04</span><hr /></div>
 
-<!-- ═══════ DEFATICAMENTO ═══════ -->
-<div id="cooldown-start" class="phase-header">
-  <p class="phase-label">Fase 3</p>
+<!-- ══════════════════════════════════════
+     ESERCIZIO 05 — SUPERMAN
+══════════════════════════════════════ -->
+<div class="scroll-scene" data-exercise="superman" data-model="models/Situps.fbx">
+  <div class="scroll-scene__sticky">
+    <div class="spinner"></div>
+    <canvas class="scene-canvas"></canvas>
+    <div class="scene-gradient"></div>
+    <div class="scene-progress"></div>
+
+    <div class="scene-info">
+      <p class="scene-num">05</p>
+      <p class="scene-tag">10 ripetizioni</p>
+      <h2 class="scene-title">Superman</h2>
+      <p class="scene-desc">
+        A pancia in giù, braccia tese in avanti. Solleva braccia, petto e gambe insieme
+        mantenendo lo sguardo verso il basso. Tieni 2-3 secondi, poi scendi lentamente.
+      </p>
+      <ul class="scene-tips">
+        <li>Tutto si solleva in un unico movimento</li>
+        <li>Sguardo a terra per proteggere il collo</li>
+        <li>Discesa sempre controllata</li>
+      </ul>
+      <button class="btn-anim" data-exercise="superman">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Vedi animazione
+      </button>
+    </div>
+
+    <div class="scene-hint">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+      <span>Scorri</span>
+    </div>
+  </div>
+</div>
+<div class="ex-divider"><span>05</span><hr /></div>
+
+<!-- ══════════════════════════════════════
+     ESERCIZIO 06 — GLUTE BRIDGE
+══════════════════════════════════════ -->
+<div class="scroll-scene" data-exercise="glutebridge" data-model="models/Burpee.fbx">
+  <div class="scroll-scene__sticky">
+    <div class="spinner"></div>
+    <canvas class="scene-canvas"></canvas>
+    <div class="scene-gradient"></div>
+    <div class="scene-progress"></div>
+
+    <div class="scene-info">
+      <p class="scene-num">06</p>
+      <p class="scene-tag">12-15 ripetizioni</p>
+      <h2 class="scene-title">Glute Bridge</h2>
+      <p class="scene-desc">
+        Schiena a terra, ginocchia piegate, piedi vicino ai glutei. Spingi i talloni e solleva
+        il bacino contraendo i glutei fino a formare una linea retta. Scendi lentamente.
+      </p>
+      <ul class="scene-tips">
+        <li>Contrai i glutei in cima al movimento</li>
+        <li>Talloni spingono forte a terra</li>
+        <li>Non far cadere il bacino di colpo</li>
+      </ul>
+      <button class="btn-anim" data-exercise="glutebridge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Vedi animazione
+      </button>
+    </div>
+
+    <div class="scene-hint">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+      <span>Scorri</span>
+    </div>
+  </div>
+</div>
+<div class="ex-divider"><span>06</span><hr /></div>
+
+<!-- ══════════════════════════════════════
+     DEFATICAMENTO
+══════════════════════════════════════ -->
+<div class="section-header">
+  <p class="section-label">Fase 3 &mdash; Alla fine</p>
   <h2>Defaticamento</h2>
-  <p>Tieni ogni posizione 20-30 secondi, respirando con calma.</p>
-</div>
-<div id="cooldown-mount"></div>
-
-<!-- Cooldown static cards -->
-<div class="cards-grid" id="cooldown-cards">
-  <div class="card"><h3>Stretching coscia posteriore</h3><p>Seduto, gambe tese. Piega il busto in avanti dal bacino. 20-30 sec.</p></div>
-  <div class="card"><h3>Stretching quadricipite</h3><p>In piedi, porta il tallone verso i glutei. 20-30 sec per gamba.</p></div>
-  <div class="card"><h3>Stretching petto e spalle</h3><p>Mani dietro la schiena, intreccia le dita e apri il petto. 20-30 sec.</p></div>
-  <div class="card"><h3>Stretching schiena bassa</h3><p>Posizione del bambino: inginocchiati, busto in avanti, fronte a terra. 20-30 sec.</p></div>
+  <p>Tieni ogni posizione 20-30 secondi, respirando con calma. Mai dolore, solo tensione leggera.</p>
 </div>
 
+<div class="cards-grid">
+  <div class="card">
+    <h3>Stretching coscia posteriore</h3>
+    <p>Seduto a terra, gambe tese. Piega il busto in avanti dal bacino verso i piedi senza strappare.</p>
+  </div>
+  <div class="card">
+    <h3>Stretching quadricipite</h3>
+    <p>In piedi, porta il tallone verso i glutei afferrando la caviglia. Ginocchia vicine. 20-30 sec per gamba.</p>
+  </div>
+  <div class="card">
+    <h3>Stretching petto e spalle</h3>
+    <p>Mani dietro la schiena, dita intrecciate, apri il petto sollevando leggermente le braccia.</p>
+  </div>
+  <div class="card">
+    <h3>Stretching schiena bassa</h3>
+    <p>Posizione del bambino: inginocchiati, siediti sui talloni, fronte a terra, braccia tese avanti.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
 <footer>
-  Calisthenics per Principianti &mdash; Animazioni <a href="https://mixamo.com" target="_blank">Mixamo</a> · <a href="scheda_calisthenics.pdf" target="_blank">Scheda PDF</a>
+  Calisthenics per Principianti &mdash;
+  Animazioni via <a href="https://mixamo.com" target="_blank" rel="noopener">Mixamo</a> &middot;
+  <a href="scheda_calisthenics.pdf" target="_blank" rel="noopener">Scheda PDF</a>
 </footer>
 
-<!-- ═══════ MODAL ═══════ -->
+<!-- ══════════════════════════════════════
+     MODALE
+══════════════════════════════════════ -->
 <div id="modal-backdrop">
   <div id="modal-box">
     <div id="modal-canvas-wrap">
-      <div class="spinner" id="modal-spinner"></div>
+      <div class="spinner" id="modal-loader"></div>
       <canvas id="modal-canvas"></canvas>
     </div>
     <div id="modal-info">
@@ -384,774 +399,18 @@ const EXERCISES = {
   </div>
 </div>
 
-// ─── Helpers Three.js ─────────────────────────────────────────────────────
-const isMobile = () => window.innerWidth < 768;
-
-function buildScene(canvas) {
-  const W = canvas.offsetWidth  || 400;
-  const H = canvas.offsetHeight || 400;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(W, H);
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-
-  const scene = new THREE.Scene();
-  // Sfondo scuro semi-trasparente (lascia vedere il bg del div)
-  scene.background = new THREE.Color(0x0a0a0a);
-
-  const camera = new THREE.PerspectiveCamera(40, W / H, 1, 2000);
-  camera.position.set(0, 110, 220);
-  camera.lookAt(0, 80, 0);
-
-  // Luci
-  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-  const dir = new THREE.DirectionalLight(0xffffff, 1.1);
-  dir.position.set(120, 200, 120);
-  dir.castShadow = true;
-  Object.assign(dir.shadow.camera, { left:-200, right:200, top:200, bottom:-200, near:1, far:1000 });
-  dir.shadow.mapSize.set(1024, 1024);
-  scene.add(dir);
-  const fill = new THREE.DirectionalLight(0xa3e635, 0.25);
-  fill.position.set(-100, 60, -60);
-  scene.add(fill);
-
-  // Pavimento + griglia
-  const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(600, 600),
-    new THREE.MeshStandardMaterial({ color:0x161616, roughness:0.95 })
-  );
-  floor.rotation.x = -Math.PI / 2;
-  floor.receiveShadow = true;
-  scene.add(floor);
-  scene.add(new THREE.GridHelper(400, 20, 0x2a2a2a, 0x1e1e1e));
-
-  return { renderer, scene, camera };
-}
-
-function attachResizeObserver(canvas, camera, renderer) {
-  const ro = new ResizeObserver(() => {
-    const W = canvas.parentElement.offsetWidth;
-    const H = canvas.parentElement.offsetHeight;
-    if (!W || !H) return;
-    camera.aspect = W / H;
-    camera.updateProjectionMatrix();
-    renderer.setSize(W, H);
-  });
-  ro.observe(canvas.parentElement);
-  return ro;
-}
-
-function loadFBX(path, scene) {
-  return new Promise((resolve, reject) => {
-    new FBXLoader().load(path, obj => {
-      obj.traverse(child => {
-        if (!child.isMesh) return;
-        child.castShadow = true;
-        child.receiveShadow = true;
-        const mats = Array.isArray(child.material) ? child.material : [child.material];
-        mats.forEach(m => { m.roughness = 0.7; m.metalness = 0.1; });
-      });
-      // Auto-scale: altezza target 170 units
-      const box = new THREE.Box3().setFromObject(obj);
-      const h = box.getSize(new THREE.Vector3()).y;
-      if (h > 0) obj.scale.setScalar(170 / h);
-      const box2 = new THREE.Box3().setFromObject(obj);
-      const c = box2.getCenter(new THREE.Vector3());
-      obj.position.set(-c.x, -box2.min.y, -c.z);
-      scene.add(obj);
-      resolve(obj);
-    }, undefined, reject);
-  });
-}
-
-// RAF loop — restituisce una funzione "stop"
-function startRenderLoop({ renderer, scene, camera, mixer, clock }) {
-  let id;
-  const loop = () => {
-    id = requestAnimationFrame(loop);
-    if (mixer) mixer.update(clock.getDelta());
-    renderer.render(scene, camera);
-  };
-  loop();
-  return () => cancelAnimationFrame(id);
-}
-
-<!-- Three.js via importmap -->
+<!-- ══════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════ -->
 <script type="importmap">
 {
   "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+    "three":          "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+    "three/addons/":  "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
   }
 }
 </script>
+<script type="module" src="app.js"></script>
 
-<script type="module">
-import * as THREE from 'three';
-import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-// ─── Exercise data ────────────────────────────────────────────────────────────
-const EXERCISES = [
-  // RISCALDAMENTO
-  {
-    id: 'arm-stretch', phase: 'warmup', num: 'W1',
-    tag: 'Riscaldamento · 15-20 sec per verso',
-    title: 'Rotazioni braccia e spalle',
-    desc: 'In piedi, braccia tese lateralmente. Disegna cerchi ampi prima in una direzione poi nell\'altra. Aumenta gradualmente l\'ampiezza del movimento.',
-    tips: ['Braccia completamente tese', 'Cerchi ampi, non piccoli', 'Aumenta l\'ampiezza progressivamente'],
-    model: 'models/Arm Stretching.fbx',
-    mount: 'warmup-mount',
-  },
-  {
-    id: 'hip-twist', phase: 'warmup', num: 'W2',
-    tag: 'Riscaldamento · 8-10 giri per direzione',
-    title: 'Rotazioni anche',
-    desc: 'Mani sui fianchi, piedi leggermente più larghi delle spalle. Ruota il bacino descrivendo un cerchio ampio, come se stessi facendo l\'hula hoop.',
-    tips: ['Busto stabile, solo il bacino ruota', 'Movimenti fluidi e continui', '8-10 giri per direzione'],
-    model: 'models/Twist Dance.fbx',
-    mount: 'warmup-mount',
-  },
-  {
-    id: 'ankle-rot', phase: 'warmup', num: 'W3',
-    tag: 'Riscaldamento · 8-10 giri per piede',
-    title: 'Rotazioni caviglie',
-    desc: 'Appoggiati a una parete o sedia per l\'equilibrio. Solleva un piede da terra e ruota la caviglia in entrambe le direzioni, poi cambia piede.',
-    tips: ['Punta e fletti il piede tra le rotazioni', 'Movimenti lenti e controllati', 'Appoggiati se necessario'],
-    model: 'models/Neck Stretching.fbx',
-    mount: 'warmup-mount',
-  },
-  // CIRCUITO
-  {
-    id: 'squat', phase: 'circuit', num: '01',
-    tag: 'Circuito · 10-15 ripetizioni',
-    title: 'Squat',
-    desc: 'Piedi alla larghezza delle spalle, punte leggermente verso l\'esterno. Spingi il bacino indietro come se ti sedessi su una sedia, schiena dritta. Scendi fino a cosce parallele al pavimento, poi risali spingendo sui talloni.',
-    tips: ['Ginocchia in linea con i piedi', 'Schiena dritta, petto aperto', 'Talloni sempre a terra'],
-    model: 'models/Air Squat.fbx',
-    mount: 'circuit-mount',
-  },
-  {
-    id: 'pushup', phase: 'circuit', num: '02',
-    tag: 'Circuito · 6-10 ripetizioni',
-    title: 'Push-up sulle ginocchia',
-    desc: 'Mani più larghe delle spalle, ginocchia a terra. Corpo dritto dalla testa alle ginocchia. Scendi piegando i gomiti fino a sfiorare il pavimento, poi risali.',
-    tips: ['Corpo in linea retta', 'Gomiti a 45° rispetto al busto', 'Petto quasi tocca il pavimento'],
-    model: 'models/Push Up.fbx',
-    mount: 'circuit-mount',
-  },
-  {
-    id: 'plank', phase: 'circuit', num: '03',
-    tag: 'Circuito · 20-30 secondi',
-    title: 'Plank',
-    desc: 'Avambracci a terra, gomiti sotto le spalle. Linea retta dalla testa ai piedi. Contrai addome e glutei, respira normalmente.',
-    tips: ['Gomiti sotto le spalle', 'Bacino né alto né basso', 'Sguardo verso il basso'],
-    model: 'models/Plank.fbx',
-    mount: 'circuit-mount',
-  },
-  {
-    id: 'lunge', phase: 'circuit', num: '04',
-    tag: 'Circuito · 8-10 per gamba',
-    title: 'Affondi (Lunge)',
-    desc: 'Passo avanti con una gamba. Piega entrambe le ginocchia a 90°. Il ginocchio anteriore non supera la punta del piede. Risali e ripeti con l\'altra gamba.',
-    tips: ['Busto eretto durante tutto il movimento', 'Ginocchio posteriore sfiora il pavimento', 'Ginocchio anteriore non supera la punta'],
-    model: 'models/Crouching.fbx',
-    mount: 'circuit-mount',
-  },
-  {
-    id: 'superman', phase: 'circuit', num: '05',
-    tag: 'Circuito · 10 ripetizioni',
-    title: 'Superman',
-    desc: 'A pancia in giù, braccia tese in avanti. Solleva contemporaneamente braccia, petto e gambe. Sguardo verso il basso. Mantieni 2-3 secondi, poi scendi lentamente.',
-    tips: ['Solleva tutto in un unico gesto', 'Sguardo verso il basso', 'Discesa sempre controllata'],
-    model: 'models/Situps.fbx',
-    mount: 'circuit-mount',
-  },
-  {
-    id: 'glute-bridge', phase: 'circuit', num: '06',
-    tag: 'Circuito · 12-15 ripetizioni',
-    title: 'Glute Bridge',
-    desc: 'Sdraiato sulla schiena, ginocchia piegate, piedi vicino ai glutei. Spingi i talloni e solleva il bacino finché il corpo è in linea retta. Scendi lentamente.',
-    tips: ['Contrai i glutei in cima', 'Talloni spingono forte a terra', 'Scendi senza far cadere il bacino'],
-    model: 'models/Burpee.fbx',
-    mount: 'circuit-mount',
-  },
-  // DEFATICAMENTO
-  {
-    id: 'stretch-ham', phase: 'cooldown', num: 'C1',
-    tag: 'Defaticamento · 20-30 secondi',
-    title: 'Stretching coscia posteriore',
-    desc: 'Seduto a terra, gambe tese davanti a te. Piega il busto in avanti dal bacino (non dalla schiena) verso i piedi, senza strappare.',
-    tips: ['Piega dal bacino, non dalla schiena', 'Nessuno strappo brusco', 'Tensione leggera, mai dolore'],
-    model: 'models/Situps.fbx',
-    mount: 'cooldown-mount',
-  },
-  {
-    id: 'stretch-quad', phase: 'cooldown', num: 'C2',
-    tag: 'Defaticamento · 20-30 sec per gamba',
-    title: 'Stretching quadricipite',
-    desc: 'In piedi, porta il tallone verso i glutei afferrando la caviglia. Mantieni le ginocchia vicine e il busto eretto.',
-    tips: ['Ginocchia vicine tra loro', 'Busto eretto', 'Appoggiati se necessario'],
-    model: 'models/Crouching.fbx',
-    mount: 'cooldown-mount',
-  },
-  {
-    id: 'stretch-chest', phase: 'cooldown', num: 'C3',
-    tag: 'Defaticamento · 20-30 secondi',
-    title: 'Stretching petto e spalle',
-    desc: 'In piedi, mani dietro la schiena con dita intrecciate. Apri il petto sollevando leggermente le braccia unite. Respira profondamente.',
-    tips: ['Apri il petto in avanti', 'Respira profondamente', 'Non alzare le spalle'],
-    model: 'models/Arm Stretching.fbx',
-    mount: 'cooldown-mount',
-  },
-  {
-    id: 'stretch-back', phase: 'cooldown', num: 'C4',
-    tag: 'Defaticamento · 20-30 secondi',
-    title: 'Stretching schiena bassa',
-    desc: 'Inginocchiati e siediti sui talloni, poi piega il busto in avanti fino a toccare terra con la fronte. Braccia distese in avanti (posizione del bambino).',
-    tips: ['Taloni vicini ai glutei', 'Braccia tese in avanti sul pavimento', 'Respira lentamente'],
-    model: 'models/Praying.fbx',
-    mount: 'cooldown-mount',
-  },
-];
-
-// ─── HERO animations ──────────────────────────────────────────────────────
-gsap.timeline({ delay: 0.2 })
-  .fromTo('#hero-tag',   { opacity:0, y:16 }, { opacity:1, y:0, duration:0.6, ease:'power2.out' })
-  .fromTo('#hero-title', { opacity:0, y:24 }, { opacity:1, y:0, duration:0.7, ease:'power2.out' }, '-=0.3')
-  .fromTo('#hero-sub',   { opacity:0, y:16 }, { opacity:1, y:0, duration:0.6, ease:'power2.out' }, '-=0.4')
-  .fromTo('#hero-cta',   { opacity:0, y:12 }, { opacity:1, y:0, duration:0.5, ease:'power2.out' }, '-=0.3')
-  .fromTo('#hero-stats', { opacity:0, y:10 }, { opacity:1, y:0, duration:0.5, ease:'power2.out' }, '-=0.25');
-
-// Warmup + cooldown cards fade-in
-gsap.utils.toArray('.warmup-card').forEach((el, i) => {
-  gsap.fromTo(el, { opacity:0, y:24 }, {
-    opacity:1, y:0, duration:0.6, ease:'power2.out', delay: i * 0.1,
-    scrollTrigger: { trigger: el, start:'top 88%', toggleActions:'play none none none' }
-  });
-});
-
-// Divisori numerati
-gsap.utils.toArray('.ex-divider').forEach(el => {
-  gsap.fromTo(el, { opacity:0 }, {
-    opacity:1, duration:0.5,
-    scrollTrigger: { trigger: el, start:'top 90%', toggleActions:'play none none none' }
-  });
-});
-
-// ─── Scroll-driven scene per ogni esercizio ───────────────────────────────
-const scenes = {}; // key = exerciseId
-
-document.querySelectorAll('.scroll-scene').forEach(wrapper => {
-  const exerciseId = wrapper.dataset.exercise;
-  const modelPath  = wrapper.dataset.model;
-  const sticky     = wrapper.querySelector('.scroll-scene__sticky');
-  const canvas     = wrapper.querySelector('.scene-canvas');
-  const spinnerEl  = wrapper.querySelector('.spinner');
-  const progressEl = wrapper.querySelector('.anim-progress');
-  const hintEl     = wrapper.querySelector('.scroll-hint');
-
-  // Overlay text elements
-  const ovTag   = wrapper.querySelector('.ov-tag');
-  const ovTitle = wrapper.querySelector('.ov-title');
-  const ovDesc  = wrapper.querySelector('.ov-desc');
-  const ovTips  = wrapper.querySelector('.ov-tips');
-  const ovBtn   = wrapper.querySelector('.ov-btn');
-
-  let loaded = false;
-  let stopRender = null;
-  let mixerRef   = null;
-  let clipDur    = 2;
-
-  // ── Testo overlay: appare quando il wrapper entra in viewport ──
-  gsap.fromTo([ovTag, ovTitle, ovDesc, ovTips, ovBtn],
-    { opacity:0, x: 30 },
-    { opacity:1, x:0, duration:0.7, ease:'power2.out', stagger:0.08,
-      scrollTrigger: { trigger: wrapper, start:'top 70%', toggleActions:'play none none none' }
-    }
-  );
-
-  // ── Lazy-load: carica il modello quando il wrapper si avvicina ──
-  const io = new IntersectionObserver(async ([entry]) => {
-    if (!entry.isIntersecting || loaded) return;
-    loaded = true;
-    io.disconnect();
-
-    const { renderer, scene, camera } = buildScene(canvas);
-    const clock = new THREE.Clock(true);
-    const ro = attachResizeObserver(canvas, camera, renderer);
-
-    // Avvia render loop (senza mixer per ora)
-    stopRender = startRenderLoop({ renderer, scene, camera, mixer: null, clock });
-
-    try {
-      const obj = await loadFBX(modelPath, scene);
-      spinnerEl.style.display = 'none';
-      canvas.style.opacity = '1';
-
-      if (obj.animations.length) {
-        const clip = obj.animations[0];
-        clipDur = clip.duration;
-        mixerRef = new THREE.AnimationMixer(obj);
-        const action = mixerRef.clipAction(clip);
-        action.play();
-        // Ferma subito a t=0, sarà lo scroll a muovere il tempo
-        mixerRef.setTime(0);
-        action.paused = true;
-
-        // Riavvia loop con mixer (ma il mixer non avanza da solo — usiamo setTime)
-        stopRender();
-        stopRender = startRenderLoop({ renderer, scene, camera, mixer: null, clock });
-      }
-
-      scenes[exerciseId] = { renderer, scene, camera, mixer: mixerRef, clock, clipDur, ro };
-
-      // ── ScrollTrigger: progress 0→1 mappa su 0→clipDur ──
-      // Su desktop la sezione è alta 300vh → ampio spazio per l'animazione
-      // Su mobile la sezione è alta auto → usiamo pin: false
-      const mobile = isMobile();
-      ScrollTrigger.create({
-        trigger: wrapper,
-        start: 'top top',
-        end: mobile ? 'bottom top' : 'bottom bottom',
-        scrub: mobile ? 0.5 : 1.2,
-        pin: false, // il CSS già gestisce il sticky
-        onUpdate(self) {
-          if (!mixerRef) return;
-          // Scrivi direttamente il tempo del mixer
-          mixerRef.setTime(self.progress * clipDur);
-          // Forza un render
-          renderer.render(scene, camera);
-          // Aggiorna barra progresso
-          if (progressEl) progressEl.style.width = (self.progress * 100) + '%';
-          // Nascondi hint dopo il primo scroll
-          if (self.progress > 0.02 && hintEl) hintEl.classList.add('hint-hidden');
-        }
-      });
-
-    } catch(err) {
-      console.warn('[calisthenics] FBX load error:', modelPath, err);
-      spinnerEl.style.display = 'none';
-      canvas.style.opacity = '0.3';
-    }
-
-  }, { rootMargin: '200px' }); // precarica 200px prima che sia visibile
-
-  io.observe(wrapper);
-});
-
-// ─── MODALE ────────────────────────────────────────────────────────────────
-let modalStop = null;
-let modalRO   = null;
-let modalCtx  = null;
-
-const backdrop    = document.getElementById('modal-backdrop');
-const modalCanvas = document.getElementById('modal-canvas');
-const modalLoader = document.getElementById('modal-loader');
-const modalClose  = document.getElementById('modal-close');
-
-async function openModal(exerciseId) {
-  const data = EXERCISES[exerciseId];
-  if (!data) return;
-
-  document.getElementById('modal-title').textContent = data.title;
-  document.getElementById('modal-reps').textContent  = data.reps;
-  document.getElementById('modal-desc').textContent  = data.desc;
-  document.getElementById('modal-tips').innerHTML    = data.tips.map(t => `<li>✦ ${t}</li>`).join('');
-
-  backdrop.classList.remove('hidden');
-  backdrop.classList.add('flex');
-  gsap.fromTo('#modal-box', { scale:0.93, opacity:0 }, { scale:1, opacity:1, duration:0.35, ease:'back.out(1.4)' });
-  document.body.style.overflow = 'hidden';
-
-  // Pulizia
-  if (modalStop) { modalStop(); modalStop = null; }
-  if (modalRO)   { modalRO.disconnect(); modalRO = null; }
-  if (modalCtx)  { modalCtx.scene.clear(); modalCtx.renderer.dispose(); modalCtx = null; }
-  modalCanvas.style.opacity = '0';
-  modalLoader.style.display = 'block';
-
-  const { renderer, scene, camera } = buildScene(modalCanvas);
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.05;
-  controls.autoRotate = true;
-  controls.autoRotateSpeed = 0.6;
-  controls.minDistance = 80;
-  controls.maxDistance = 450;
-  controls.target.set(0, 80, 0);
-  controls.update();
-
-  const clock = new THREE.Clock(true);
-  modalCtx = { renderer, scene, camera, controls, clock };
-  modalRO = attachResizeObserver(modalCanvas, camera, renderer);
-
-  // Loop con OrbitControls
-  let modalId;
-  const modalLoop = () => {
-    modalId = requestAnimationFrame(modalLoop);
-    const delta = clock.getDelta();
-    if (modalCtx?.mixer) modalCtx.mixer.update(delta);
-    controls.update();
-    renderer.render(scene, camera);
-  };
-  modalLoop();
-  modalStop = () => cancelAnimationFrame(modalId);
-
-  try {
-    const obj = await loadFBX(data.model, scene);
-    modalLoader.style.display = 'none';
-    modalCanvas.style.opacity = '1';
-    if (obj.animations.length) {
-      const mixer = new THREE.AnimationMixer(obj);
-      mixer.clipAction(obj.animations[0]).play();
-      modalCtx.mixer = mixer;
-    }
-  } catch(e) {
-    console.warn('[modal] FBX error:', e);
-    modalLoader.style.display = 'none';
-  }
-}
-
-function closeModal() {
-  gsap.to('#modal-box', {
-    scale: 0.93, opacity: 0, duration: 0.25, ease: 'power2.in',
-    onComplete() {
-      backdrop.classList.add('hidden');
-      backdrop.classList.remove('flex');
-      document.body.style.overflow = '';
-      if (modalStop) { modalStop(); modalStop = null; }
-      if (modalRO)   { modalRO.disconnect(); modalRO = null; }
-      if (modalCtx)  { modalCtx.scene.clear(); modalCtx.renderer.dispose(); modalCtx = null; }
-      modalCanvas.style.opacity = '0';
-      modalLoader.style.display = 'block';
-    }
-  });
-}
-
-document.querySelectorAll('.view-anim-btn').forEach(btn => {
-  btn.addEventListener('click', () => openModal(btn.dataset.exercise));
-});
-modalClose.addEventListener('click', closeModal);
-backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-// ─── Refresh ScrollTrigger al resize ──────────────────────────────────────
-window.addEventListener('resize', () => {
-  ScrollTrigger.refresh();
-});
-
-</script>
-</body>
-</html>
-
-// ─── Build exercise HTML ──────────────────────────────────────────────────
-function buildExerciseHTML(ex) {
-  return `
-  <div class="ex-scroll-space" data-exid="${ex.id}" data-model="${ex.model}">
-    <div class="ex-sticky">
-      <div class="ex-canvas-container">
-        <div class="spinner ex-spinner"></div>
-        <canvas></canvas>
-      </div>
-      <div class="ex-overlay"></div>
-      <div class="ex-info">
-        <div class="ex-num">${ex.num}</div>
-        <p class="ex-tag">${ex.tag}</p>
-        <h2 class="ex-title">${ex.title}</h2>
-        <p class="ex-desc">${ex.desc}</p>
-        <ul class="ex-tips">${ex.tips.map(t => `<li>${t}</li>`).join('')}</ul>
-        <button class="ex-btn" data-modal="${ex.id}">▶ Vedi animazione</button>
-      </div>
-      <div class="ex-progress-bar"><div class="ex-progress-fill"></div></div>
-    </div>
-  </div>`;
-}
-
-// Mount exercises into their containers
-const mountMap = {};
-for (const ex of EXERCISES) {
-  if (!mountMap[ex.mount]) mountMap[ex.mount] = '';
-  mountMap[ex.mount] += buildExerciseHTML(ex);
-}
-for (const [id, html] of Object.entries(mountMap)) {
-  const el = document.getElementById(id);
-  if (el) el.innerHTML = html;
-}
-
-// ─── Three.js utils ───────────────────────────────────────────────────────
-function buildScene(canvas, { autoOrbit = false } = {}) {
-  const W = canvas.clientWidth  || canvas.parentElement.clientWidth  || 640;
-  const H = canvas.clientHeight || canvas.parentElement.clientHeight || 480;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(W, H, false);
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x09090b);
-  scene.fog = new THREE.FogExp2(0x09090b, 0.005);
-
-  const camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 2000);
-  camera.position.set(0, 120, 220);
-  camera.lookAt(0, 80, 0);
-
-  // Lights
-  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-  const sun = new THREE.DirectionalLight(0xffffff, 1.4);
-  sun.position.set(120, 220, 140);
-  sun.castShadow = true;
-  sun.shadow.mapSize.setScalar(1024);
-  sun.shadow.camera.left = sun.shadow.camera.bottom = -200;
-  sun.shadow.camera.right = sun.shadow.camera.top = 200;
-  scene.add(sun);
-  const fill = new THREE.DirectionalLight(0xa3e635, 0.25);
-  fill.position.set(-120, 60, -80);
-  scene.add(fill);
-
-  // Floor
-  const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(800, 800),
-    new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.9 })
-  );
-  floor.rotation.x = -Math.PI / 2;
-  floor.receiveShadow = true;
-  scene.add(floor);
-  scene.add(new THREE.GridHelper(600, 24, 0x27272a, 0x1f1f22));
-
-  let controls = null;
-  if (autoOrbit) {
-    controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.06;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 1;
-    controls.target.set(0, 80, 0);
-    controls.minDistance = 80;
-    controls.maxDistance = 500;
-    controls.update();
-  }
-
-  return { renderer, scene, camera, controls };
-}
-
-function loadModel(path, scene) {
-  return new Promise((resolve, reject) => {
-    new FBXLoader().load(path, obj => {
-      obj.traverse(c => {
-        if (!c.isMesh) return;
-        c.castShadow = c.receiveShadow = true;
-        [c.material].flat().forEach(m => { m.roughness = .7; m.metalness = .1; });
-      });
-      // Normalize scale and position
-      const box = new THREE.Box3().setFromObject(obj);
-      const size = new THREE.Vector3(); box.getSize(size);
-      obj.scale.setScalar(170 / size.y);
-      const box2 = new THREE.Box3().setFromObject(obj);
-      const cen = new THREE.Vector3(); box2.getCenter(cen);
-      obj.position.x -= cen.x;
-      obj.position.z -= cen.z;
-      obj.position.y -= box2.min.y;
-      scene.add(obj);
-      resolve(obj);
-    }, undefined, reject);
-  });
-}
-
-function startLoop({ renderer, scene, camera, controls, getMixer }) {
-  let id;
-  const clock = new THREE.Clock(true);
-  function loop() {
-    id = requestAnimationFrame(loop);
-    const dt = clock.getDelta();
-    getMixer()?.update(dt);
-    controls?.update();
-    // resize guard
-    const canvas = renderer.domElement;
-    const pw = canvas.parentElement.clientWidth;
-    const ph = canvas.parentElement.clientHeight;
-    if (canvas.width !== pw || canvas.height !== ph) {
-      renderer.setSize(pw, ph, false);
-      camera.aspect = pw / ph;
-      camera.updateProjectionMatrix();
-    }
-    renderer.render(scene, camera);
-  }
-  loop();
-  return () => cancelAnimationFrame(id);
-}
-
-// ─── Scroll-jacked scenes ─────────────────────────────────────────────────
-// Each .ex-scroll-space has height=300vh.
-// The sticky child fills 100vh. GSAP ScrollTrigger scrubs mixer time.
-
-const gsap = window.gsap;
-const ScrollTrigger = window.ScrollTrigger;
-gsap.registerPlugin(ScrollTrigger);
-
-// Hero entrance
-gsap.from('#hero-tag',   { opacity:0, y:16, duration:.6, delay:.2 });
-gsap.from('#hero-title', { opacity:0, y:24, duration:.7, delay:.35 });
-gsap.from('#hero-sub',   { opacity:0, y:16, duration:.6, delay:.5 });
-gsap.from('#hero-cta',   { opacity:0, y:12, duration:.5, delay:.65 });
-gsap.from('#hero-stats', { opacity:0, y:10, duration:.5, delay:.8 });
-
-// Phase headers
-gsap.utils.toArray('.phase-header').forEach(el => {
-  gsap.from(el.children, { opacity:0, y:24, duration:.7, stagger:.1, ease:'power2.out',
-    scrollTrigger: { trigger: el, start: 'top 80%', toggleActions: 'play none none none' } });
-});
-
-// Per each exercise scroll-space
-const sceneRegistry = {};  // id → { stop, mixer, clipDuration }
-
-document.querySelectorAll('.ex-scroll-space').forEach(wrapper => {
-  const exId      = wrapper.dataset.exid;
-  const modelPath = wrapper.dataset.model;
-  const sticky    = wrapper.querySelector('.ex-sticky');
-  const canvas    = wrapper.querySelector('canvas');
-  const spinner   = wrapper.querySelector('.ex-spinner');
-  const progFill  = wrapper.querySelector('.ex-progress-fill');
-  const exInfo    = wrapper.querySelector('.ex-info');
-
-  // Slide-in the info panel
-  gsap.from(exInfo, { x: -40, opacity: 0, duration: .8, ease: 'power2.out',
-    scrollTrigger: { trigger: wrapper, start: 'top 75%', toggleActions: 'play none none none' } });
-
-  // Lazy-load scene when wrapper enters viewport
-  let loaded = false;
-  const io = new IntersectionObserver(([entry]) => {
-    if (!entry.isIntersecting || loaded) return;
-    loaded = true;
-    io.disconnect();
-
-    const { renderer, scene, camera, controls } = buildScene(canvas);
-    let mixer = null;
-    let clipDur = 2;
-
-    loadModel(modelPath, scene).then(obj => {
-      spinner.style.display = 'none';
-      canvas.style.opacity = '1';
-
-      if (obj.animations?.length) {
-        mixer = new THREE.AnimationMixer(obj);
-        clipDur = obj.animations[0].duration;
-        const action = mixer.clipAction(obj.animations[0]);
-        action.play();
-        mixer.setTime(0); // start at frame 0, scroll will drive it
-      }
-
-      sceneRegistry[exId] = { stop: null, mixer, clipDur };
-
-      // ── THE KEY: ScrollTrigger scrubs animation time ──────────────────
-      // start: when sticky top hits viewport top (section locked)
-      // end:   when sticky bottom hits viewport bottom (section unlocks)
-      // scrub: true = directly tied to scroll position
-      ScrollTrigger.create({
-        trigger: wrapper,
-        start: 'top top',       // pin moment
-        end: 'bottom bottom',   // unpin moment
-        scrub: 0.6,             // slight smoothing like Apple
-        onUpdate(self) {
-          const s = sceneRegistry[exId];
-          if (!s?.mixer) return;
-          s.mixer.setTime(self.progress * s.clipDur);
-          progFill.style.width = `${self.progress * 100}%`;
-        },
-      });
-
-      sceneRegistry[exId].stop = startLoop({
-        renderer, scene, camera, controls,
-        getMixer: () => sceneRegistry[exId]?.mixer ?? null,
-      });
-
-    }).catch(err => {
-      spinner.style.display = 'none';
-      console.warn('[FBX] failed:', modelPath, err);
-    });
-
-  }, { threshold: 0.01, rootMargin: '200px 0px' });
-
-  io.observe(wrapper);
-});
-
-// ─── Modal ────────────────────────────────────────────────────────────────
-const backdrop    = document.getElementById('modal-backdrop');
-const modalCanvas = document.getElementById('modal-canvas');
-const modalSpinner= document.getElementById('modal-spinner');
-let modalStop = null;
-let modalMixer= null;
-
-function buildModalData(id) {
-  return EXERCISES.find(e => e.id === id);
-}
-
-async function openModal(exId) {
-  const data = buildModalData(exId);
-  if (!data) return;
-
-  document.getElementById('modal-reps').textContent  = data.tag;
-  document.getElementById('modal-title').textContent = data.title;
-  document.getElementById('modal-desc').textContent  = data.desc;
-  document.getElementById('modal-tips').innerHTML    = data.tips.map(t => `<li>${t}</li>`).join('');
-
-  backdrop.classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  gsap.from('#modal-box', { scale: .9, opacity: 0, duration: .35, ease: 'back.out(1.5)' });
-
-  // Reset
-  if (modalStop) { modalStop(); modalStop = null; }
-  modalCanvas.style.opacity = '0';
-  modalSpinner.style.display = 'block';
-
-  const { renderer, scene, camera, controls } = buildScene(modalCanvas, { autoOrbit: true });
-
-  try {
-    const obj = await loadModel(data.model, scene);
-    modalSpinner.style.display = 'none';
-    modalCanvas.style.opacity = '1';
-
-    if (obj.animations?.length) {
-      const m = new THREE.AnimationMixer(obj);
-      m.clipAction(obj.animations[0]).play();
-      modalMixer = m;
-    }
-  } catch(e) {
-    modalSpinner.style.display = 'none';
-    console.warn('[Modal FBX] error', e);
-  }
-
-  modalStop = startLoop({ renderer, scene, camera, controls, getMixer: () => modalMixer });
-}
-
-function closeModal() {
-  gsap.to('#modal-box', { scale: .93, opacity: 0, duration: .25, ease: 'power2.in', onComplete() {
-    backdrop.classList.remove('open');
-    document.body.style.overflow = '';
-    if (modalStop) { modalStop(); modalStop = null; }
-    modalMixer = null;
-    modalCanvas.style.opacity = '0';
-    modalSpinner.style.display = 'block';
-  }});
-}
-
-document.getElementById('modal-close').addEventListener('click', closeModal);
-backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-// Wire all "Vedi animazione" buttons (delegated, works after DOM injection)
-document.addEventListener('click', e => {
-  const btn = e.target.closest('.ex-btn[data-modal]');
-  if (btn) openModal(btn.dataset.modal);
-});
-
-</script>
 </body>
 </html>
