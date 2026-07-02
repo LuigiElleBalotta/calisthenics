@@ -195,16 +195,17 @@ body {
   transition: opacity .4s;
 }
 
-/* Gradient so text stays readable on desktop */
+/* Gradient covers the RIGHT side so text is readable — model stays clear on left */
 @media (min-width: 768px) {
   .scene-gradient {
     position: absolute;
     inset: 0;
     background: linear-gradient(
-      to right,
-      rgba(9,9,11,.9) 0%,
-      rgba(9,9,11,.6) 40%,
-      rgba(9,9,11,0)  80%
+      to left,
+      rgba(9,9,11,.92) 0%,
+      rgba(9,9,11,.75) 35%,
+      rgba(9,9,11,.1)  65%,
+      rgba(9,9,11,0)   80%
     );
     pointer-events: none;
   }
@@ -213,11 +214,11 @@ body {
   .scene-gradient { display: none; }
 }
 
-/* Info panel — desktop: absolute overlay; mobile: below canvas */
+/* Info panel — desktop: right side overlay; mobile: below canvas */
 @media (min-width: 768px) {
   .scene-info {
     position: absolute;
-    top: 0; left: 0;
+    top: 0; right: 0;
     width: 42%;
     height: 100%;
     display: flex;
