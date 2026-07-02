@@ -478,50 +478,6 @@ body {
 }
 #modal-close:hover { border-color: var(--lime); color: var(--lime); }
 
-/* ─────────── YOUTUBE SCENE ─────────── */
-/* Drop-in replacement for .scroll-scene when using a YouTube video */
-.yt-scene {
-  position: relative;
-  background: var(--bg);
-}
-
-@media (min-width: 768px) {
-  .yt-scene { min-height: 100vh; }
-}
-@media (max-width: 767px) {
-  .yt-scene { min-height: auto; }
-}
-
-.yt-scene__inner {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-@media (min-width: 768px) {
-  .yt-scene__inner { height: 100vh; }
-}
-@media (max-width: 767px) {
-  .yt-scene__inner { height: 72vw; min-height: 260px; }
-}
-
-/* 16:9 iframe fills container */
-.yt-video-wrap {
-  position: absolute;
-  inset: 0;
-  pointer-events: none; /* no controls, clean look */
-}
-.yt-video-wrap iframe {
-  position: absolute;
-  /* Oversized to crop YouTube UI edges */
-  top: -10%;
-  left: -5%;
-  width: 110%;
-  height: 120%;
-  border: none;
-}
-
-/* Reuse scene-info and scene-gradient as-is */
 
 /* ─────────── FOOTER ─────────── */
 footer {
@@ -541,47 +497,54 @@ footer a:hover { color: var(--lime); }
 @media (min-width: 768px)  { .mobile-only  { display: none; } }
 
 /* ─────────── YOUTUBE SCENE ─────────── */
-.yt-scene { position: relative; }
+/* Desktop: fullscreen con overlay testo a destra
+   Mobile:  video 16:9 sopra + testo in flusso normale sotto */
 
-.yt-scene__inner {
+.yt-scene {
   position: relative;
-  overflow: hidden;
   background: var(--bg);
 }
-@media (min-width: 768px) { .yt-scene__inner { height: 100vh; } }
-@media (max-width: 767px) { .yt-scene__inner { height: 72vw; min-height: 280px; } }
 
-.yt-video-wrap {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.yt-video-wrap iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.yt-scene .scene-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to left,
-    rgba(9,9,11,.92) 0%,
-    rgba(9,9,11,.75) 35%,
-    rgba(9,9,11,.1)  65%,
-    rgba(9,9,11,0)   80%
-  );
-  pointer-events: none;
-}
-@media (max-width: 767px) { .yt-scene .scene-gradient { display: none; } }
-
+/* ── Desktop ── */
 @media (min-width: 768px) {
+  .yt-scene           { min-height: 100vh; }
+
+  .yt-scene__inner {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .yt-video-wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .yt-video-wrap iframe {
+    position: absolute;
+    top: -10%; left: -5%;
+    width: 110%; height: 120%;
+    border: none;
+  }
+
+  .yt-scene .scene-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to left,
+      rgba(9,9,11,.92) 0%,
+      rgba(9,9,11,.75) 35%,
+      rgba(9,9,11,.1)  65%,
+      rgba(9,9,11,0)   80%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
   .yt-scene .scene-info {
     position: absolute;
     top: 0; right: 0;
-    width: 42%;
-    height: 100%;
+    width: 42%; height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -589,6 +552,43 @@ footer a:hover { color: var(--lime); }
     z-index: 10;
   }
 }
+
+/* ── Mobile ── */
 @media (max-width: 767px) {
-  .yt-scene .scene-info { padding: 1.25rem 1.25rem 0; }
+  /* aspect-ratio 16:9 trick con padding-top */
+  .yt-scene__inner {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .yt-video-wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .yt-video-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  /* Gradiente non serve su mobile */
+  .yt-scene .scene-gradient { display: none; }
+
+  /* Testo in flusso normale, sotto il video */
+  .yt-scene .scene-info {
+    position: static;
+    width: 100%;
+    padding: 1.25rem 1.25rem 2rem;
+  }
+}
+
+/* Bottone YouTube sempre sopra il video */
+.btn-yt {
+  position: relative;
+  z-index: 20;
 }
