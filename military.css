@@ -128,3 +128,7 @@
 @media (max-width: 767px) {
   .prereq-inner { flex-direction: column; gap: .5rem; }
 }
+
+/* YouTube button — red on military theme */
+.theme-military .btn-yt { background: #dc2626; }
+.theme-military .btn-yt:hover { background: #b91c1c; }
