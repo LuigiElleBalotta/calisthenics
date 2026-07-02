@@ -459,6 +459,51 @@ body {
 }
 #modal-close:hover { border-color: var(--lime); color: var(--lime); }
 
+/* ─────────── YOUTUBE SCENE ─────────── */
+/* Drop-in replacement for .scroll-scene when using a YouTube video */
+.yt-scene {
+  position: relative;
+  background: var(--bg);
+}
+
+@media (min-width: 768px) {
+  .yt-scene { min-height: 100vh; }
+}
+@media (max-width: 767px) {
+  .yt-scene { min-height: auto; }
+}
+
+.yt-scene__inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .yt-scene__inner { height: 100vh; }
+}
+@media (max-width: 767px) {
+  .yt-scene__inner { height: 72vw; min-height: 260px; }
+}
+
+/* 16:9 iframe fills container */
+.yt-video-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* no controls, clean look */
+}
+.yt-video-wrap iframe {
+  position: absolute;
+  /* Oversized to crop YouTube UI edges */
+  top: -10%;
+  left: -5%;
+  width: 110%;
+  height: 120%;
+  border: none;
+}
+
+/* Reuse scene-info and scene-gradient as-is */
+
 /* ─────────── FOOTER ─────────── */
 footer {
   text-align: center;
@@ -475,3 +520,56 @@ footer a:hover { color: var(--lime); }
 
 @media (max-width: 767px)  { .desktop-only { display: none; } }
 @media (min-width: 768px)  { .mobile-only  { display: none; } }
+
+/* ─────────── YOUTUBE SCENE ─────────── */
+.yt-scene { position: relative; }
+
+.yt-scene__inner {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+@media (min-width: 768px) { .yt-scene__inner { height: 100vh; } }
+@media (max-width: 767px) { .yt-scene__inner { height: 72vw; min-height: 280px; } }
+
+.yt-video-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.yt-video-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.yt-scene .scene-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to left,
+    rgba(9,9,11,.92) 0%,
+    rgba(9,9,11,.75) 35%,
+    rgba(9,9,11,.1)  65%,
+    rgba(9,9,11,0)   80%
+  );
+  pointer-events: none;
+}
+@media (max-width: 767px) { .yt-scene .scene-gradient { display: none; } }
+
+@media (min-width: 768px) {
+  .yt-scene .scene-info {
+    position: absolute;
+    top: 0; right: 0;
+    width: 42%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem;
+    z-index: 10;
+  }
+}
+@media (max-width: 767px) {
+  .yt-scene .scene-info { padding: 1.25rem 1.25rem 0; }
+}
