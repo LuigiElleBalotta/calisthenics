@@ -15,7 +15,7 @@ models/      — file FBX da Mixamo
 ```
 
 > ⚠️ Non mettere mai commenti HTML `<!-- -->` dentro `<script type="module">` — il browser li rifiuta come errore di sintassi e il modulo non parte.
-
+SC
 ## Scroll behaviour — desktop vs mobile
 
 Il sito ha due comportamenti completamente distinti a seconda del device.

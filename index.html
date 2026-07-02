@@ -1,413 +1,223 @@
 <!DOCTYPE html>
-<html lang="it" prefix="og: https://ogp.me/ns#">
+<html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calisthenics per Principianti | Allenamento a Corpo Libero 3D</title>
-  <meta name="description" content="Scheda calisthenics per principianti con animazioni 3D interattive. 6 esercizi a corpo libero da fare a casa senza attrezzi: squat, push-up, plank, affondi, superman e glute bridge." />
-  <meta name="keywords" content="calisthenics principianti, allenamento corpo libero, esercizi casa senza attrezzi, squat, push-up, plank, affondi, superman, glute bridge" />
-  <meta name="author" content="Luigi Balotta" />
-  <meta name="robots" content="index, follow" />
+  <title>Allenamento a Corpo Libero — Scegli il tuo programma</title>
+  <meta name="description" content="Scegli tra la scheda Calisthenics per principianti e il Military Workout ad alta intensità. Entrambi senza attrezzi." />
   <link rel="canonical" href="https://luigiellebalotta.github.io/calisthenics/" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://luigiellebalotta.github.io/calisthenics/" />
-  <meta property="og:title" content="Calisthenics per Principianti | Allenamento 3D a Corpo Libero" />
-  <meta property="og:description" content="Scopri la scheda calisthenics per principianti con animazioni 3D scroll-driven. 6 esercizi senza attrezzi, tutorial interattivi." />
-  <meta property="og:image" content="https://luigiellebalotta.github.io/calisthenics/og-image.png" />
-  <meta property="og:locale" content="it_IT" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Calisthenics per Principianti | Animazioni 3D" />
-  <meta name="twitter:description" content="Allenamento a corpo libero con animazioni 3D interattive. Nessun attrezzo richiesto." />
-  <meta name="twitter:image" content="https://luigiellebalotta.github.io/calisthenics/og-image.png" />
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Calisthenics per Principianti",
-    "description": "Scheda calisthenics per principianti con animazioni 3D interattive.",
-    "url": "https://luigiellebalotta.github.io/calisthenics/",
-    "inLanguage": "it",
-    "author": { "@type": "Person", "name": "Luigi Balotta" }
-  }
-  </script>
-
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏋️</text></svg>" />
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    .split {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .panel {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      text-decoration: none;
+      overflow: hidden;
+      transition: flex 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+    }
+
+    /* Hover espande il pannello */
+    .split:has(.panel:hover) .panel:not(:hover) { flex: 0.4; }
+    .split:has(.panel:hover) .panel:hover        { flex: 1.6; }
+
+    /* Background e overlay */
+    .panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      transition: opacity 0.5s;
+    }
+
+    /* Calisthenics — verde scuro */
+    .panel--cal { background: #0a110a; }
+    .panel--cal::before { background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(132,204,22,0.18) 0%, transparent 70%); }
+
+    /* Military — rosso scuro */
+    .panel--mil { background: #110a0a; }
+    .panel--mil::before { background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(220,38,38,0.2) 0%, transparent 70%); }
+
+    /* Divisore */
+    .divider {
+      width: 1px;
+      background: rgba(255,255,255,0.08);
+      flex-shrink: 0;
+      transition: opacity 0.3s;
+      z-index: 10;
+      align-self: stretch;
+    }
+
+    /* Contenuto panel */
+    .panel__content {
+      position: relative;
+      z-index: 1;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .panel__icon { font-size: 3.5rem; line-height: 1; }
+
+    .panel__label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      color: #fff;
+    }
+
+    .panel__title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .panel--cal .panel__title span { color: #a3e635; }
+    .panel--mil .panel__title span { color: #ef4444; }
+
+    .panel__desc {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.45);
+      max-width: 280px;
+    }
+
+    .panel__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .tag {
+      padding: 0.3rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .panel--cal .tag { background: rgba(163,230,53,0.12); color: #a3e635; border: 1px solid rgba(163,230,53,0.2); }
+    .panel--mil .tag { background: rgba(239,68,68,0.12);  color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+
+    .panel__cta {
+      margin-top: 0.5rem;
+      padding: 0.8rem 2rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel--cal .panel__cta {
+      background: #a3e635;
+      color: #09090b;
+      box-shadow: 0 4px 24px rgba(163,230,53,0.2);
+    }
+    .panel--mil .panel__cta {
+      background: #ef4444;
+      color: #fff;
+      box-shadow: 0 4px 24px rgba(239,68,68,0.25);
+    }
+
+    .panel__cta:hover { transform: scale(1.05); }
+    .panel--cal .panel__cta:hover { box-shadow: 0 6px 32px rgba(163,230,53,0.35); }
+    .panel--mil .panel__cta:hover { box-shadow: 0 6px 32px rgba(239,68,68,0.4); }
+
+    /* Freccia animata */
+    .arrow {
+      display: inline-block;
+      transition: transform 0.25s;
+    }
+    .panel__cta:hover .arrow { transform: translateX(4px); }
+
+    /* Mobile: impila verticalmente */
+    @media (max-width: 640px) {
+      html, body { overflow: auto; }
+      .split { flex-direction: column; height: auto; min-height: 100vh; }
+      .panel { flex: none !important; min-height: 50vh; }
+      .divider { width: 100%; height: 1px; }
+      .split:has(.panel:hover) .panel:not(:hover),
+      .split:has(.panel:hover) .panel:hover { flex: none; }
+      .panel__title { font-size: 2rem; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     HERO
-══════════════════════════════════════ -->
-<section id="hero">
-  <p class="section-label opacity-0" id="hero-tag">Allenamento a corpo libero</p>
-  <h1 class="opacity-0" id="hero-title">
-    Calisthenics<br /><span>per Principianti</span>
-  </h1>
-  <p class="hero-sub opacity-0" id="hero-sub">
-    3 giri del circuito &middot; 60-90 sec di riposo &middot; 2-3 sessioni a settimana<br />
-    Nessun attrezzo richiesto.
-  </p>
-  <div class="hero-cta opacity-0" id="hero-cta">
-    <a href="#exercises" class="btn-primary">Inizia ora</a>
-    <a href="scheda_calisthenics.pdf" class="btn-outline" target="_blank" rel="noopener">Scheda PDF</a>
-  </div>
-  <div class="hero-stats opacity-0" id="hero-stats">
-    <div><p class="stat-num">6</p><p class="stat-label">Esercizi</p></div>
-    <div><p class="stat-num">3</p><p class="stat-label">Giri</p></div>
-    <div><p class="stat-num">0</p><p class="stat-label">Attrezzi</p></div>
-  </div>
-  <div class="scroll-indicator">
-    <span>Scorri</span>
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 5v14M5 12l7 7 7-7"/>
-    </svg>
-  </div>
-</section>
+<div class="split">
 
-<!-- ══════════════════════════════════════
-     RISCALDAMENTO
-══════════════════════════════════════ -->
-<div class="section-header">
-  <p class="section-label">Fase 1 &mdash; Prima di iniziare</p>
-  <h2>Riscaldamento</h2>
-  <p>5 minuti di movimenti lenti per mobilizzare le articolazioni.</p>
-</div>
-
-<div class="cards-grid">
-  <div class="card">
-    <div class="card-icon">💪</div>
-    <h3>Rotazioni braccia e spalle</h3>
-    <p>Braccia tese lateralmente. Cerchi ampi prima in una direzione poi nell'altra, 15-20 sec per verso.</p>
-  </div>
-  <div class="card">
-    <div class="card-icon">🔄</div>
-    <h3>Rotazioni anche</h3>
-    <p>Mani sui fianchi. Ruota il bacino come l'hula hoop. 8-10 giri per direzione.</p>
-  </div>
-  <div class="card">
-    <div class="card-icon">🦶</div>
-    <h3>Rotazioni caviglie</h3>
-    <p>Appoggiati a una parete. Solleva un piede e ruota la caviglia. 8-10 giri per piede.</p>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════
-     CIRCUITO — intestazione
-══════════════════════════════════════ -->
-<div id="exercises" class="section-header">
-  <p class="section-label">Fase 2 &mdash; Il circuito</p>
-  <h2>Gli Esercizi</h2>
-  <p class="desktop-only">Scorri lentamente — l'animazione 3D si muove insieme a te.</p>
-  <p class="mobile-only">Tocca "Vedi animazione" per il tutorial completo di ogni esercizio.</p>
-</div>
-
-<!-- ══════════════════════════════════════
-     ESERCIZIO 01 — SQUAT
-══════════════════════════════════════ -->
-<div class="scroll-scene" data-exercise="squat" data-model="models/Air Squat.fbx">
-  <div class="scroll-scene__sticky">
-    <div class="spinner"></div>
-    <canvas class="scene-canvas"></canvas>
-    <div class="scene-gradient"></div>
-    <div class="scene-progress"></div>
-
-    <div class="scene-info">
-      <p class="scene-num">01</p>
-      <p class="scene-tag">10-15 ripetizioni</p>
-      <h2 class="scene-title">Squat</h2>
-      <p class="scene-desc">
-        Piedi alla larghezza delle spalle, punte leggermente verso l'esterno.
-        Spingi il bacino indietro come se ti sedessi su una sedia, schiena dritta.
-        Scendi a cosce parallele al pavimento, risali spingendo sui talloni.
+  <!-- CALISTHENICS -->
+  <a class="panel panel--cal" href="calisthenics.html">
+    <div class="panel__content">
+      <div class="panel__icon">🏃</div>
+      <p class="panel__label">Livello base</p>
+      <h1 class="panel__title">Calisthenics<br/><span>per Principianti</span></h1>
+      <p class="panel__desc">
+        6 esercizi a corpo libero, 3 giri, 60-90 secondi di riposo.
+        Ideale per chi inizia da zero.
       </p>
-      <ul class="scene-tips">
-        <li>Ginocchia in linea con i piedi</li>
-        <li>Schiena dritta per tutto il movimento</li>
-        <li>Talloni sempre a contatto col pavimento</li>
-      </ul>
-      <button class="btn-anim" data-exercise="squat">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        Vedi animazione
-      </button>
-    </div>
-
-    <div class="scene-hint">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12l7 7 7-7"/>
-      </svg>
-      <span>Scorri</span>
-    </div>
-  </div>
-</div>
-<div class="ex-divider"><span>01</span><hr /></div>
-
-<!-- ══════════════════════════════════════
-     ESERCIZIO 02 — PUSH-UP
-══════════════════════════════════════ -->
-<div class="scroll-scene" data-exercise="pushup" data-model="models/Push Up.fbx">
-  <div class="scroll-scene__sticky">
-    <div class="spinner"></div>
-    <canvas class="scene-canvas"></canvas>
-    <div class="scene-gradient"></div>
-    <div class="scene-progress"></div>
-
-    <div class="scene-info">
-      <p class="scene-num">02</p>
-      <p class="scene-tag">6-10 ripetizioni</p>
-      <h2 class="scene-title">Push-up sulle ginocchia</h2>
-      <p class="scene-desc">
-        Mani più larghe delle spalle, ginocchia a terra. Corpo dritto dalla testa alle ginocchia.
-        Scendi col petto a sfiorare il pavimento, poi risali spingendo.
-      </p>
-      <ul class="scene-tips">
-        <li>Corpo in linea dalla testa alle ginocchia</li>
-        <li>Gomiti a 45° rispetto al busto</li>
-        <li>Petto quasi a toccare il pavimento</li>
-      </ul>
-      <button class="btn-anim" data-exercise="pushup">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        Vedi animazione
-      </button>
-    </div>
-
-    <div class="scene-hint">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12l7 7 7-7"/>
-      </svg>
-      <span>Scorri</span>
-    </div>
-  </div>
-</div>
-<div class="ex-divider"><span>02</span><hr /></div>
-
-<!-- ══════════════════════════════════════
-     ESERCIZIO 03 — PLANK
-══════════════════════════════════════ -->
-<div class="scroll-scene" data-exercise="plank" data-model="models/Plank.fbx">
-  <div class="scroll-scene__sticky">
-    <div class="spinner"></div>
-    <canvas class="scene-canvas"></canvas>
-    <div class="scene-gradient"></div>
-    <div class="scene-progress"></div>
-
-    <div class="scene-info">
-      <p class="scene-num">03</p>
-      <p class="scene-tag">20-30 secondi</p>
-      <h2 class="scene-title">Plank</h2>
-      <p class="scene-desc">
-        Avambracci a terra, gomiti sotto le spalle. Corpo in linea retta dalla testa ai piedi.
-        Contrai addome e glutei, respira normalmente e mantieni la posizione.
-      </p>
-      <ul class="scene-tips">
-        <li>Gomiti direttamente sotto le spalle</li>
-        <li>Bacino né alto né basso</li>
-        <li>Sguardo verso il basso, collo neutro</li>
-      </ul>
-      <button class="btn-anim" data-exercise="plank">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        Vedi animazione
-      </button>
-    </div>
-
-    <div class="scene-hint">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12l7 7 7-7"/>
-      </svg>
-      <span>Scorri</span>
-    </div>
-  </div>
-</div>
-<div class="ex-divider"><span>03</span><hr /></div>
-
-<!-- ══════════════════════════════════════
-     ESERCIZIO 04 — AFFONDI
-══════════════════════════════════════ -->
-<div class="scroll-scene" data-exercise="lunge" data-model="models/Crouching.fbx">
-  <div class="scroll-scene__sticky">
-    <div class="spinner"></div>
-    <canvas class="scene-canvas"></canvas>
-    <div class="scene-gradient"></div>
-    <div class="scene-progress"></div>
-
-    <div class="scene-info">
-      <p class="scene-num">04</p>
-      <p class="scene-tag">8-10 per gamba</p>
-      <h2 class="scene-title">Affondi</h2>
-      <p class="scene-desc">
-        Passo avanti, scendi piegando le ginocchia a 90°. Il ginocchio davanti non supera
-        la punta del piede, quello posteriore sfiora il pavimento. Risali e alterna le gambe.
-      </p>
-      <ul class="scene-tips">
-        <li>Busto sempre eretto</li>
-        <li>Ginocchio posteriore a sfiorare il pavimento</li>
-        <li>Ginocchio anteriore non oltre la punta del piede</li>
-      </ul>
-      <button class="btn-anim" data-exercise="lunge">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        Vedi animazione
-      </button>
-    </div>
-
-    <div class="scene-hint">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 5v14M5 12l7 7 7-7"/>
-      </svg>
-      <span>Scorri</span>
-    </div>
-  </div>
-</div>
-<div class="ex-divider"><span>04</span><hr /></div>
-
-<!-- ══════════════════════════════════════
-     ESERCIZIO 05 — SUPERMAN (YouTube)
-══════════════════════════════════════ -->
-<div class="yt-scene">
-  <div class="yt-scene__inner">
-    <div class="yt-video-wrap">
-      <iframe
-        src="https://www.youtube.com/embed/z6PJMT2y8GQ?autoplay=1&mute=1&loop=1&playlist=z6PJMT2y8GQ&controls=0&rel=0&modestbranding=1&playsinline=1"
-        title="Superman exercise tutorial"
-        allow="autoplay; encrypted-media"
-        allowfullscreen
-        loading="lazy">
-      </iframe>
-    </div>
-    <div class="scene-gradient"></div>
-    <div class="scene-info">
-      <p class="scene-num">05</p>
-      <p class="scene-tag">10 ripetizioni</p>
-      <h2 class="scene-title">Superman</h2>
-      <p class="scene-desc">
-        A pancia in giù, braccia tese in avanti. Solleva braccia, petto e gambe insieme
-        mantenendo lo sguardo verso il basso. Tieni 2-3 secondi, poi scendi lentamente.
-      </p>
-      <ul class="scene-tips">
-        <li>Tutto si solleva in un unico movimento</li>
-        <li>Sguardo a terra per proteggere il collo</li>
-        <li>Discesa sempre controllata</li>
-      </ul>
-      <a href="https://www.youtube.com/watch?v=z6PJMT2y8GQ" target="_blank" rel="noopener" class="btn-yt">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
-        Guarda su YouTube
-      </a>
-    </div>
-  </div>
-</div>
-<div class="ex-divider"><span>05</span><hr /></div>
-
-<!-- ══════════════════════════════════════
-     ESERCIZIO 06 — GLUTE BRIDGE (YouTube)
-══════════════════════════════════════ -->
-<div class="yt-scene">
-  <div class="yt-scene__inner">
-    <div class="yt-video-wrap">
-      <iframe
-        src="https://www.youtube.com/embed/Vzy7WrsK58g?autoplay=1&mute=1&loop=1&playlist=Vzy7WrsK58g&controls=0&rel=0&modestbranding=1&playsinline=1"
-        title="Glute Bridge exercise tutorial"
-        allow="autoplay; encrypted-media"
-        allowfullscreen
-        loading="lazy">
-      </iframe>
-    </div>
-    <div class="scene-gradient"></div>
-    <div class="scene-info">
-      <p class="scene-num">06</p>
-      <p class="scene-tag">12-15 ripetizioni</p>
-      <h2 class="scene-title">Glute Bridge</h2>
-      <p class="scene-desc">
-        Schiena a terra, ginocchia piegate, piedi vicino ai glutei. Spingi i talloni e solleva
-        il bacino contraendo i glutei fino a formare una linea retta. Scendi lentamente.
-      </p>
-      <ul class="scene-tips">
-        <li>Contrai i glutei in cima al movimento</li>
-        <li>Talloni spingono forte a terra</li>
-        <li>Non far cadere il bacino di colpo</li>
-      </ul>
-      <a href="https://www.youtube.com/watch?v=Vzy7WrsK58g" target="_blank" rel="noopener" class="btn-yt">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
-        Guarda su YouTube
-      </a>
-    </div>
-  </div>
-</div>
-<div class="ex-divider"><span>06</span><hr /></div>
-
-<!-- ══════════════════════════════════════
-     DEFATICAMENTO
-══════════════════════════════════════ -->
-<div class="section-header">
-  <p class="section-label">Fase 3 &mdash; Alla fine</p>
-  <h2>Defaticamento</h2>
-  <p>Tieni ogni posizione 20-30 secondi, respirando con calma. Mai dolore, solo tensione leggera.</p>
-</div>
-
-<div class="cards-grid">
-  <div class="card">
-    <h3>Stretching coscia posteriore</h3>
-    <p>Seduto a terra, gambe tese. Piega il busto in avanti dal bacino verso i piedi senza strappare.</p>
-  </div>
-  <div class="card">
-    <h3>Stretching quadricipite</h3>
-    <p>In piedi, porta il tallone verso i glutei afferrando la caviglia. Ginocchia vicine. 20-30 sec per gamba.</p>
-  </div>
-  <div class="card">
-    <h3>Stretching petto e spalle</h3>
-    <p>Mani dietro la schiena, dita intrecciate, apri il petto sollevando leggermente le braccia.</p>
-  </div>
-  <div class="card">
-    <h3>Stretching schiena bassa</h3>
-    <p>Posizione del bambino: inginocchiati, siediti sui talloni, fronte a terra, braccia tese avanti.</p>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════
-     FOOTER
-══════════════════════════════════════ -->
-<footer>
-  Calisthenics per Principianti &mdash;
-  Animazioni via <a href="https://mixamo.com" target="_blank" rel="noopener">Mixamo</a> &middot;
-  <a href="scheda_calisthenics.pdf" target="_blank" rel="noopener">Scheda PDF</a>
-</footer>
-
-<!-- ══════════════════════════════════════
-     MODALE
-══════════════════════════════════════ -->
-<div id="modal-backdrop">
-  <div id="modal-box">
-    <div id="modal-canvas-wrap">
-      <div class="spinner" id="modal-loader"></div>
-      <canvas id="modal-canvas"></canvas>
-    </div>
-    <div id="modal-info">
-      <div>
-        <p id="modal-reps"></p>
-        <h3 id="modal-title"></h3>
-        <p id="modal-desc"></p>
-        <ul id="modal-tips"></ul>
+      <div class="panel__tags">
+        <span class="tag">Principianti</span>
+        <span class="tag">6 esercizi</span>
+        <span class="tag">Nessun attrezzo</span>
       </div>
-      <button id="modal-close">Chiudi</button>
+      <span class="panel__cta">
+        Inizia
+        <span class="arrow">→</span>
+      </span>
     </div>
-  </div>
-</div>
+  </a>
 
-<!-- ══════════════════════════════════════
-     SCRIPTS
-══════════════════════════════════════ -->
-<script type="importmap">
-{
-  "imports": {
-    "three":          "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-    "three/addons/":  "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
-  }
-}
-</script>
-<script type="module" src="app.js"></script>
+  <div class="divider"></div>
+
+  <!-- MILITARY -->
+  <a class="panel panel--mil" href="military.html">
+    <div class="panel__content">
+      <div class="panel__icon">🎖️</div>
+      <p class="panel__label">Alta intensità</p>
+      <h1 class="panel__title">Military<br/><span>Workout</span></h1>
+      <p class="panel__desc">
+        Circuito AMRAP 12 minuti, esercizi esplosivi, 15-20 secondi di riposo.
+        Per chi ha già una base solida.
+      </p>
+      <div class="panel__tags">
+        <span class="tag">Intermedio</span>
+        <span class="tag">AMRAP 12 min</span>
+        <span class="tag">Alta intensità</span>
+      </div>
+      <span class="panel__cta">
+        Inizia
+        <span class="arrow">→</span>
+      </span>
+    </div>
+  </a>
+
+</div>
 
 </body>
 </html>
